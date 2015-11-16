@@ -1,0 +1,73 @@
+<ion-view view-title="调课申请" class="viewbackgroundcolor" hide-back-button="true">
+    <ion-nav-buttons class="backbuttonsdiv" side="left" >
+        <div  style="clear: inherit;"ng-click="back()" >
+            <div style="float: left"><i class="ion-chevron-left"  ng-click="back()"></i></div>
+            <div style="float: right"><span class="backbuttons" ng-click="back()">返回</span></div>
+        </div>
+    </ion-nav-buttons>
+    <ion-content class="padding">
+        <div class="list">
+            <label class="item"  style="background-color: transparent;border: 0;color: white">
+                <span>申请教师 :</span>
+                <span class="item-note" style="color: white">{{adjust.teacherName}}</span>
+            </label>
+            <div  class="inforitem"></div>
+            <label class="item item-input" style="background-color: transparent;border: 0;color: white">
+                <span style="margin-right: 15px;">调课原因 :</span>
+                <input type="text" style="text-align: right;color: white" ng-model="adjust.why">
+                <!--<textarea cols="60" rows="5" ng-model="adjust.why" style="width: 100%; background-color: transparent; font-size: 14px" ></textarea>-->
+            </label>
+            <div  class="inforitem"></div>
+            <br/>
+            <ion-list>
+                <ion-item ng-click="choosecourseclass()" style="background-color: transparent;border: 0;color: white">
+                    <span style="margin-right: 15px;">调课班级 :</span>
+                    <span class="item-note" style="color: white">{{adjust.class}}</span>
+                </ion-item>
+                <div  class="inforitem"></div>
+                <label class="item item-input" style="background-color: transparent;border: 0;color: white">
+                    <span style="margin-right: 15px;">课程名称 :</span>
+                    <input type="text" style="text-align: right;color: white" ng-model="adjust.subjects">
+                </label>
+                <div  class="inforitem"></div>
+            </ion-list>
+
+            <div style="margin-top: 10px;margin-bottom: 10px;color: white;;">调课前 :</div>
+
+            <label class="item" ng-click="choosecourseaddress()" style="background-color: transparent;border: 0;color: white">
+                <span style="margin-right: 15px;">上课地点 :</span>
+                <span class="item-note" style="color: white">{{adjust.beforeaddress}}</span>
+                <!--<input type="text" style="text-align: right" class="item-note" ng-model="adjust.beforeplace">-->
+            </label>
+            <div  class="inforitem"></div>
+            <label class="item" ng-click="openbefortime()" style="background-color: transparent;border: 0;color: white">
+                <span style="margin-right: 15px;">上课时间 :</span>
+                <span class="item-note" style="color: white">{{adjust.AdjustSection}}</span>
+            </label>
+            <div  class="inforitem"></div>
+
+            <div style="margin-top: 10px;margin-bottom: 10px;color: white;">调课后 :</div>
+
+            <label class="item" ng-click="choosecourseaddressafter()" style="background-color: transparent;border: 0;color: white">
+                <span style="margin-right: 15px;">上课地点 :</span>
+                <span class="item-note" style="color: white">{{adjust.afteraddress}}</span>
+                <!--<input type="text" style="text-align: right" class="item-note" ng-model="adjust.beforeplace">-->
+            </label>
+            <div  class="inforitem"></div>
+            <label class="item" ng-click="openaftertime()" style="background-color: transparent;border: 0;color: white">
+                <span style="margin-right: 15px;">上课时间 :</span>
+                <span class="item-note" style="color: white">{{adjust.AdjustSectionafter}}</span>
+            </label>
+            <div  class="inforitem"></div>
+        </div>
+        <div>
+            <div style="float: left;width: 49%;opacity: 0.8" >
+                <button class="button button-block button-assertive" style="border: 0;border-radiue:0" ng-click="reset()" >重置</button>
+            </div>
+            <div style="float: right; width: 49%;opacity: 0.8">
+                <button class="button button-block button-positive" style="border: 0;border-radiue:0" ng-click="submit()">提交</button>
+            </div>
+        </div>
+        <br/> <br/> <br/>
+    </ion-content>
+</ion-view>

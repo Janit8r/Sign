@@ -1,0 +1,147 @@
+<style>
+    .transparent {
+        background: transparent !important;
+    }
+    .image-modal {
+        width: 100% !important;
+        height: 100%;
+        top: 0 !important;
+        left: 0 !important;
+    }
+    .fullscreen-image {
+        max-width: 100%;
+        max-height: 100%;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        overflow: auto;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+    @media (max-width: 600px) {
+        .modal-backdrop-bg {
+            background-color:#191919;
+        }
+    }
+</style>
+
+<ion-view view-title="个人信息" class="viewbackgroundcolor">
+    <ion-content class="padding">
+    <div class="padding">
+
+        <div class="item item-input" style="padding-right: 15px; padding-top: 2%;padding-bottom: 2%;background-color: transparent;border: 0;">
+            <!-- 设置头像位置以及样式-->
+            <div style="float: left">
+                <img ng-src="{{teacher.Photo}}" ng-click="showImage()" style="width: 64px; height: 64px">
+            </div>
+            <!-- 设置基本样式-->
+            <div style="float: left;width: 100%; margin-left: 20px;" ng-click="changePhoto()">
+                <label class=" item-input" style="padding-right: 15px;color: white">
+                    <span class="label">姓名：</span>
+                    <span class="label_1" style="text-align: right;color: white;">{{teacher.Name}}</span>
+                </label>
+                <label class=" item-input"style="padding-right: 15px;color: white">
+                    <span class="label">性别：</span>
+                    <span class="label_1"  style="text-align: right;color: white;">{{teacher.Sex}}</span>
+                </label>
+            </div>
+            <i class="icon ion-chevron-right icon-accessory" style="color: white"></i>
+        </div>
+        <div class="inforitem"></div>
+
+        <!-- 添加点击放大头像的样式-->
+        <script id="before" type="text/ng-template">
+            <div class="modal image-modal transparent" >
+                <ion-pane class="transparent">
+                    <img style="width: 90%;height: auto;" ng-src="{{teacher.Photo}}" class="fullscreen-image" ng-click="closeModal()"/>
+                </ion-pane>
+            </div>
+        </script>
+
+        <!-- 添加选择头像后弹出窗口预览-->
+        <script id="after" type="text/ng-template">
+            <div class="modal image-modal transparent"  ng-click="usePhoto()">
+                <ion-pane class="transparent">
+                    <div class="bar bar-header bar-royal">
+                        <!--<i class="button ion-chevron-left" ng-click="return()" style="border: 0px solid transparent;background-color: transparent; font-size: 25px" ></i>-->
+                        <!--<span class="button" ng-click="return()" style="border: 0px solid transparent;background-color: transparent;padding: 0px;font-size: 16px" >返回</span>-->
+                        <button class="button button-clear" style="margin-right: 10px"  ng-click="return()"><i class="ion-chevron-left" style="margin-right: 5px;font-weight: 100"></i>返回</button>
+                        <h1 class="title"></h1>
+                        <button class="button button-clear" style="margin-right: 10px"  ng-click="save()">保存</button>
+                    </div>
+                    <img style="width: 90%;height: auto;" ng-src="{{imgSrc_after}}" class="fullscreen-image"/>
+                </ion-pane>
+            </div>
+        </script>
+
+        <!-- 个人信息的其他属性-->
+        <div class="list list-inset" style="background-color: transparent;" >
+            <div class="item item-icon-right" ng-click="changePhone()" style="background-color: transparent;border: 0;color: white;">
+                电话
+                <span style="color: red;display:{{check}}" class="item-note">点击此处绑定手机</span>
+                <span class="item-note" style="color: white;">{{teacher.Phone}}</span>
+                <i class="icon ion-chevron-right icon-accessory" style="color: white"></i>
+            </div>
+
+            <div class="inforitem"></div>
+
+            <div class="item item-icon-right" ng-click="changeQQ()" style="background-color: transparent;border: 0;color: white">
+                Q&nbspQ
+                <span class="item-note" style="color: white;">{{teacher.QQ}}</span>
+                <i class="icon ion-chevron-right icon-accessory" style="color: white"></i>
+            </div>
+            <div class="inforitem"></div>
+            <div class="item item-icon-right" ng-click="changeEamail()" style="background-color: transparent;border: 0;color: white">
+                邮箱
+                <span class="item-note" style="color: white;">{{teacher.Email}}</span>
+                <i class="icon ion-chevron-right icon-accessory" style="color: white"></i>
+            </div>
+            <div class="inforitem"></div>
+        </div>
+        <br/><br>
+        <div style="float: left;width: 49%">
+            <button class="button button-block button-assertive " style="border: 0; border-radius: 0;opacity: 0.8" ng-click="changePassword()" >修改密码</button>
+        </div>
+        <div style="float: right; width: 49%;">
+            <button class="button button-block button-positive " style="border: 0;border-radius: 0; opacity: 0.8" ng-click="cancellation()">注销</button>
+        </div>
+        <!--修改个人信息-->
+        <script id="change_informations" type="text/ng-template">
+            <div class="modal viewbackgroundcolor" >
+
+                <ion-header-bar class="" style="background-color: transparent">
+                    <h1 class="title" style="color:white;">修改{{some.tag}}</h1>
+                    <button class="button button-icon icon ion-ios-close" style="color:white;" ng-click="close()"></button>
+                </ion-header-bar>
+
+                <ion-content>
+                    <form ng-submit="createTask(task)">
+                        <div class="list"  >
+                            <label class="item item-input" style="background-color: transparent;border: 0">
+                                <input type="text" placeholder="{{some.message}}"  ng-model="new.Infors">
+                            </label>
+                            <div  class="inforitem"></div>
+
+                            <div class="list" style="display: {{show}}">
+                                <label class="item item-input" style="background-color: transparent;border: 0">
+                                    <input type="text" placeholder="请输入新的密码"  ng-model="new.New_password">
+                                </label>
+                                <div  class="inforitem"></div>
+                                <label class="item item-input" style="background-color: transparent;border: 0">
+                                    <input type="text" placeholder="请确认您的密码"  ng-model="new.Sure_password">
+                                </label>
+                                <div  class="inforitem"></div>
+                            </div>
+                        </div>
+
+                        <div class="padding">
+                            <button class="button button-block button-positive" style="border: 0;border-radius: 0" ng-click="saveInfo()">保存</button>
+                        </div>
+                    </form>
+                </ion-content>
+            </div>
+        </script>
+    </div>
+    </ion-content>
+</ion-view>

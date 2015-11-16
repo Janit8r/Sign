@@ -1,0 +1,47 @@
+<ion-view view-title="旷课详情"  style="background-color: #ecebf1">
+    <ion-content style="background-color: #EAE9EA;overflow:hidden;overflow-x: auto" overflow-scroll="true">
+        <div class="fixed_div">
+            <div style="height: 20vh; width: 100%; background: url(img/loginback.jpg) no-repeat; background-size: 100% 100%;" align="center" >
+                <div style="height: 12.5vh; width: 22.2vw;">
+                    <img src={{Stu_Photo}} style="width: 100%; height: 100%; border-radius: 50%;margin-top: 2vh"/>
+                </div>
+                <div style="margin-top: 3.5vh;">
+                    <span style="font-size: 5vw; color: white;">{{name}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="virtual_body" >
+            <div class="item" ng-repeat="attendance_studentsInfor in attendance_studentsInfors | orderBy : 'BeginSubjectDate':false">
+                {{attendance_studentsInfor.BeginSubjectDate | date : "yyyy-MM-dd HH:mm"}} - {{attendance_studentsInfor.EndSubjectDate | date : "HH:mm"}}旷课
+                <span class="item-note">{{attendance_studentsInfor.SubjectName}}</span>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+
+<style type="text/css">
+
+    html,body {
+        overflow:hidden;
+        margin:0px;
+        width:100%;
+        height:100%;
+    }
+
+    .virtual_body {
+        width:100%;
+        height:100%;
+        overflow-y:scroll;
+        overflow-x:auto;
+    }
+
+    .fixed_div {
+        /*position:absolute;*/
+        z-index:3;
+        top:0px;
+        left:0px;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+</style>

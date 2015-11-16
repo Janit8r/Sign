@@ -1,0 +1,35 @@
+<ion-view view-title="我的老师" hide-back-button="true">
+    <ion-nav-buttons class="backbuttonsdiv" side="left" >
+        <div  style="clear: inherit;"ng-click="back()" >
+            <div style="float: left"><i class="ion-chevron-left"  ng-click="back()"></i></div>
+            <div style="float: right"><span class="backbuttons" ng-click="back()">返回</span></div>
+        </div>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="card" ng-repeat="teacher in teachers">
+
+            <div class="item item-divider">
+                {{teacher.Name}}
+            </div>
+            <div class="item item-text-wrap">
+                <!--<p>任课：{{teacher.subjects}}</p>-->
+                <p>电话：{{teacher.Phone}}</p>
+                <p>Q&nbsp&nbspQ：{{teacher.QQ}}</p>
+                <p>邮箱：{{teacher.Email}}</p>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+<style type="text/css">
+    .item-divider{
+        background-color: #339999;
+        color: white;
+    }
+    .card{
+        border: 0;
+        border-radius: 0;
+        box-shadow:5px 5px 5px #444;
+        -moz-box-shadow:5px 5px 5px #444;
+        -webkit-box-shadow:5px 5px 5px #444;
+    }
+</style>

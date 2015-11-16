@@ -1,0 +1,80 @@
+<ion-view view-title="提交申请"  hide-back-button="true" style="background-color: #ecebf1">
+    <ion-nav-buttons  side="left" >
+        <div class="backbuttonsdiv" style="clear: inherit;"ng-click="back()" >
+            <div style="float: left"><i class="ion-chevron-left "  ng-click="back()"></i></div>
+            <div style="float: right"><span class="backbuttons " ng-click="back()">返回</span></div>
+        </div>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="list">
+            <br>
+            <div class="item">
+                姓名
+                <span class="item-note">{{studentname}}</span>
+            </div>
+            <br>
+            <div class="item item-icon-right" ng-click="opendateModal_start()">
+                开始时间
+                <span class="item-note">{{datepicker_start}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div class="item item-icon-right" ng-click="opendateModal_end()">
+                结束时间
+                <span class="item-note">{{datepicker_end}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div class="item">
+                请假原因
+            </div>
+            <div class="item"style="margin-top: 2px">
+                <textarea cols="60" rows="5" ng-model="leave.why" style="width: 100%; background-color: transparent; font-size: 14px" ></textarea>
+            </div>
+
+        </div>
+        <!--<div class="list">-->
+            <!--<label class="item" style="background-color: transparent" >-->
+                <!--<span>姓名</span>-->
+                <!--<span class="item-note">{{studentname}}</span>-->
+            <!--</label>-->
+            <!--<label ng-click="opentime()">-->
+                <!--<div>-->
+                    <!--<label class="item item-input" style="background-color: transparent">-->
+                        <!--<i>开始时间</i>-->
+                                    <!--<input type="text"-->
+                                           <!--ng-model="datepicker_start"-->
+                                           <!--ng-click="opendateModal_start()"-->
+                                           <!--style="background-color: transparent;text-align: right"-->
+                                           <!--readonly>-->
+                        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+                    <!--</label>-->
+                    <!--<label class="item item-input" style="background-color: transparent">-->
+                        <!--<i>结束时间</i>-->
+                        <!--<input type="text"-->
+                               <!--ng-model="datepicker_end"-->
+                               <!--ng-click="opendateModal_end()"-->
+                               <!--style="background-color: transparent;text-align: right;"-->
+                               <!--readonly>-->
+                        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+                    <!--</label>-->
+                <!--</div>-->
+
+            <!--</label>-->
+            <!--<label class="item" style="background-color: transparent">-->
+                <!--<span>请假原因</span>-->
+                <!--<textarea cols="60" rows="5" ng-model="leave.why" style="width: 100%; background-color: transparent; font-size: 14px" ></textarea>-->
+            <!--</label>-->
+        <!--</div>-->
+        <div class="padding">
+            <div style="float: left;width: 49%;opacity: 0.8" >
+                <button class="button button-block button-assertive" style="border: 0;border-radius: 0" ng-click="back()" >取消</button>
+            </div>
+            <div style="float: right; width: 49%;opacity: 0.8">
+                <button class="button button-block button-positive" style="border: 0;border-radius: 0" ng-click="submit()">提交</button>
+            </div>
+        </div>
+
+
+
+
+    </ion-content>
+</ion-view>

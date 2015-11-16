@@ -1,0 +1,88 @@
+<style>
+    .transparent {
+        background: transparent !important;
+    }
+    .image-modal {
+        width: 100% !important;
+        height: 100%;
+        top: 0 !important;
+        left: 0 !important;
+    }
+    .fullscreen-image {
+        max-width: 100%;
+        max-height: 100%;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        overflow: auto;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+    @media (max-width: 600px) {
+        .modal-backdrop-bg {
+            background-color:#191919;
+        }
+    }
+</style>
+
+
+<!--在tab中创建新的视图，视图的title绑定student中的name属性-->
+<ion-view view-title="班级成员详情"  style="background-color: #ecebf1">
+
+    <ion-content>
+        <br/>
+        <div class="item item-input" style=" padding-right: 15px; padding-top: 2%;padding-bottom: 2%;">
+            <!-- 设置头像位置以及样式-->
+            <div style="float: left">
+                <img ng-src="{{student.Photo}}" ng-click="openModal()" style="width: 64px; height: 64px">
+            </div>
+            <!-- 设置基本样式-->
+            <div style=" float: left;width: 100%; margin-left: 20px;">
+                <label class=" item-input" style="padding-right: 15px">
+                    <span class="label">姓名：</span>
+                    <span class="label_1" style="text-align: right">{{student.StudentName}}</span>
+                </label>
+                <label class=" item-input"style="padding-right: 15px">
+                    <span class="label">性别：</span>
+                    <span class="label_1"  style="text-align: right">{{student.Sex}}</span>
+                </label>
+            </div>
+        </div>
+
+
+        <!-- 添加点击放大头像的样式-->
+        <script id="big_image" type="text/ng-template">
+            <div class="modal image-modal transparent" >
+                <ion-pane class="transparent">
+                    <img style="width: 90%;height: auto;" ng-src="{{student.Photo}}" class="fullscreen-image" ng-click="closeModal()"/>
+                </ion-pane>
+            </div>
+        </script>
+
+        <br/>
+        <!-- 其他属性-->
+        <div class="list"  >
+            <div class="item">
+                学号
+                <span class="item-note">{{student.Number}}</span>
+            </div>
+            <div class="item">
+                电话
+                <span class="item-note">{{student.Phone}}</span>
+            </div>
+            <div class="item">
+                Q&nbspQ
+                <span class="item-note">{{student.QQ}}</span>
+            </div>
+            <div class="item">
+                宿舍
+                <span class="item-note">{{student.Dorm}}</span>
+            </div>
+            <div class="item">
+                籍贯
+                <span class="item-note">{{student.Native}}</span>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

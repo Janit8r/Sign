@@ -1,0 +1,34 @@
+<ion-view view-title="请假详情" class="viewbackgroundcolor">
+    <ion-content class="padding">
+        <div class="card" style="opacity:0.7;" ng-repeat="vacation in vacations">
+            <div class="item item-text-wrap">
+                <p align="center" style="font-weight: bold;font-size: 18px;">请假申请书</p>
+                <br/>
+                <p style="margin-bottom: 10px;">申请人 : {{vacation.Student.StudentName}}</p>
+                <p style="margin-bottom: 10px;">所属班级 : {{classes.ClassName}}</p>
+                <p style="margin-bottom: 10px;">请假时间 : {{vacation.BeginDate | date:'yyyy/MM/dd'}} - {{vacation.EndDate | date:'yyyy/MM/dd'}}</p>
+                <p style="margin-bottom: 10px;">请假原因 : {{vacation.Reason}}</p>
+                <div ng-show="status == -1">
+                    <div class="situation_pass" ng-show="vacation.Status==1">已批准</div>
+                    <div class="situation_review" ng-show="vacation.Status==-1">待审核</div>
+                    <div class="situation_rejected" ng-show="vacation.Status==0">已驳回</div>
+                </div>
+                <div ng-show="status == 1">
+                    <div class="situation_pass">已批准</div>
+                </div>
+                <div ng-show="status == 0">
+                    <div class="situation_rejected">已驳回</div>
+                </div>
+
+            </div>
+        </div>
+        <div ng-if="!show" ng-repeat="vacation in vacations" ng-show="vacation.Status==-1">
+            <div style="float: left;width: 49%">
+                <button class="button button-block button-assertive " style=" opacity: 0.8" ng-click="rejected()" >驳回</button>
+            </div>
+            <div style="float: right; width: 49%;">
+                <button class="button button-block button-positive " style=" opacity: 0.8" ng-click="Agreed()" >同意</button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

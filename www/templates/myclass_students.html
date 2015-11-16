@@ -1,0 +1,28 @@
+<ion-view view-title="班级成员"  hide-back-button="true">
+    <ion-nav-buttons class="backbuttonsdiv" side="left" >
+        <div  style="clear: inherit;"ng-click="return()" >
+            <div style="float: left"><i class="ion-chevron-left"  ng-click="return()"></i></div>
+            <div style="float: right"><span class="backbuttons" ng-click="return()">返回</span></div>
+        </div>
+    </ion-nav-buttons>
+
+    <ion-content>
+
+        <ion-list>
+            <!-- 绑定跳转的地址，系统自动寻找id-->
+            <ion-item class="item-avatar item-icon-right" style="" ng-repeat="student in students" href="#/myclass_students/{{student._id}}">
+                <!-- 绑定的头像图片-->
+                <img ng-src="{{student.Photo}}">
+                <!-- 绑定的学生姓名-->
+                <h2 >{{student.StudentName}}</h2>
+                <!-- 绑定的学生联系方式-->
+                <p>{{student.Phone}}</p>
+                <!-- 添加向右箭头按钮-->
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+</ion-view>
+
+

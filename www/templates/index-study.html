@@ -1,0 +1,94 @@
+<ion-view view-title="学习" hide-back-button="true">
+    <ion-content overflow-scroll="true" style="overflow: hidden">
+        <table style="width: 100%;" ng-style="{height: screenheight + 'px'}">
+            <tr>
+                <td style="width:33%;height:{{jiugongeheight}}px;background-color: #339999;">
+                    <!-- 第一个九宫格-->
+                </td>
+                <td valign="cener" style="width:33.1%;height:{{jiugongeheight}}px;background-color: #339999;text-align: center" ng-click="leave()">
+                    <!-- 第二个九宫格-->
+                    <!-- 分割线-->
+                    <div class="longitudinaldivfirst" style="width:2px;height: 100%;float: left"></div>
+                    <!-- 九宫格内容-->
+                    <div style="color: white;margin-top: 5vh">
+                        <i class="ion-ios-list-outline" style="font-size: 70px;"></i>
+                        <br/>
+                        <span>我的请假</span>
+                    </div>
+                </td>
+                <td style="width:33.1%;height: {{jiugongeheight}}px;background-color: #339999">
+                    <!-- 第三个九宫格-->
+                    <!-- 分割线-->
+                    <div class="longitudinaldivfirst" style="width:2px;height: 100%;float: left"></div>
+                    <!-- 内容-->
+                    <div style="color: rgba(255, 255, 255, 0);margin-top: 5vh">
+                        <i class="ion-ios-list-outline" style="font-size: 70px;"></i>
+                        <br/>
+                        <span></span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 2px">
+                <!-- 第一行分割线-->
+                <td colspan="3"><div style="clear: both" class="transversediv"></td>
+            </tr>
+            <tr>
+                <td valign="cener" style="width:33.1%;height:{{jiugongeheight}}px;background-color: #339999;text-align: center" ng-click="MySchedule()">
+                    <!-- 第四个九宫格-->
+                    <!-- 内容-->
+                    <div style="color: white;margin-top: 5vh">
+                        <i class="ion-ios-calendar" style="font-size: 70px;"></i>
+                        <br/>
+                        <span>我的课表</span>
+                    </div>
+                </td>
+
+                <td valign="cener" style="width:33.1%;height:{{jiugongeheight}}px;background-color:#339999;text-align: center" ng-click="sign()">
+                    <!-- 第五个-->
+                    <!-- 分割线-->
+                    <div class="longitudinaldivsecond" style="width:2px;height: 100%;float: left"></div>
+                    <!--<div class="" style="width:2px;float: left;background-color: red;height:100%;"></div>-->
+                    <!-- 内容-->
+                    <div style="color: white;margin-top: 5vh">
+                        <i class="ion-android-locate" style="font-size: 70px;"></i>
+                        <br/>
+                        <span>签到</span>
+                    </div>
+                </td>
+                <td valign="cener" style="width:33.1%;height:{{jiugongeheight}}px;background-color: #339999;text-align: center" ng-click="classmates()">
+                    <div class="longitudinaldivsecond" style="width:2px;height: 100%;float: left"></div>
+                    <div style="color: white;margin-top: 5vh">
+                        <i class="ion-ios-people" style="font-size: 70px;"></i>
+                        <br/>
+                        <span>我的同学</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 2px">
+                <td colspan="3" style="background-color: #339999"><div style="clear: both" class="transversediv"></td>
+            </tr>
+            <tr>
+                <td valign="cener" style="width:33.1%;height:{{jiugongeheight}}px;background-color: #339999;text-align: center">
+
+                </td>
+                <td valign="cener" style="width:33.1%;height:{{jiugongeheight}}px;background-color: #339999;text-align: center" ng-click="myteachers()">
+                    <div class="longitudinaldivthird" style="width:2px;height: 100%;float: left"></div>
+                    <div style="color: white;margin-top: 5vh">
+                        <i class="ion-android-contact" style="font-size: 70px;"></i>
+                        <br/>
+                        <span>我的老师</span>
+                    </div>
+                </td>
+                <td valign="cener" style="width:33.1%;height:{{jiugongeheight}}px;background-color: #339999;text-align: center">
+                    <div class="longitudinaldivthird" style="width:2px;height: 100%;float: left"></div>
+                    <div style="color: rgba(255, 255, 255, 0);margin-top: 5vh">
+                        <i class="ion-ios-list-outline" style="font-size: 70px;"></i>
+                        <br/>
+                        <span></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </ion-content>
+</ion-view>
+

@@ -1,0 +1,13 @@
+<ion-view view-title="专业列表"  style="background-color: #ecebf1">
+    <ion-content>
+
+        <ion-list style="color: white;">
+            <!-- 绑定跳转的地址，系统自动寻找id-->
+            <ion-item class="item-icon-right" ng-repeat="profession in professions"  type="item-text-wrap" href="#/teacher_attendance_college/{{collegeId}}/{{profession._id}}">
+                <h2>{{profession.ProfessionName}}专业</h2>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+</ion-view>

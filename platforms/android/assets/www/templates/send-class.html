@@ -1,0 +1,20 @@
+<div class="list">
+    <ion-radio  value="全专业" ng-model="message.classes" ng-click="ChooseClass('全专业')" ng-show="Purview==1 || Purview==2">全专业</ion-radio>
+    <ion-radio  value="{{value}}" ng-model="message.classes" ng-click="ChooseClass(value)" ng-repeat="value in classes">{{value.ClassName}}</ion-radio>
+</div>
+<style>
+    .popup-head{
+        opacity: 0.7;
+        /*background-color: #9CE1F2;*/
+        /*background-color: #2BC0E4;*/
+        background: -webkit-linear-gradient(top left, rgba(43, 220, 255, 0.9) 0%, #2BC0E4 100%);
+        background: linear-gradient(to bottom right, rgba(43, 220, 255, 0.9) 0%, #2BC0E4 100%);
+        border: 0;
+    }
+    /*.popup-body{*/
+    /*background-color: #2BC0E4;*/
+    /*}*/
+    .popup-buttons{
+        /*background-color: #00e41e;*/
+    }
+</style>

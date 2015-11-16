@@ -1,0 +1,57 @@
+<ion-view hide-nav-bar="true"class="viewbackgroundcolor" hide-back-button="true">
+    <ion-content class="padding">
+        <div align="center" class="padding" style="margin-top: 10%">
+            <img src="./img/ionic.png" />
+        </div>
+        <!--<div class="list" >-->
+            <!--<label class="item item-input " style="background-color: transparent">-->
+                <!--<i class="icon ion-card ion-icon-a" style="width: 40px"></i>-->
+                <!--<input type="text" placeholder="身份证号码" style="font-size: 17px;margin-left: 8px" ng-model="user.ID_card"/>-->
+            <!--</label>-->
+
+            <!--<label class="item item-input" style="background-color: transparent">-->
+                <!--<i class="icon ion-ios-locked-outline ion-icon-a pwd" style="width: 40px"></i>-->
+                <!--<input type="password" placeholder="密码" style="font-size: 17px;margin-left: 5px" ng-model="user.password"/>-->
+            <!--</label>-->
+
+            <!--<label class="item item-input" style="background-color: transparent">-->
+                <!--<i class="icon ion-ios-locked-outline ion-icon-a pwd" style="width: 40px"></i>-->
+                <!--<input type="password" placeholder="确定密码" style="font-size: 17px;margin-left: 5px" ng-model="user.check_password"/>-->
+            <!--</label>-->
+
+        <!--</div>-->
+        <!--<div style="float: left;width: 49%;opacity: 0.8" >-->
+            <!--<button class="button button-block button-assertive" ng-click="lastFoot()" >上一步</button>-->
+        <!--</div>-->
+        <!--<div style="float: right; width: 49%;opacity: 0.8">-->
+            <!--<button class="button button-block button-positive" ng-click="register()">确定</button>-->
+        <!--</div>-->
+
+
+
+        <div class="container" style="padding: 0 0">
+
+            <div>
+                <form class="form"  ng-model="form">
+                    <input class="input" type="text" ng-model="user.ID_card"  placeholder="学号">
+                    <input class="input" type="password" ng-model="user.password"  placeholder="密码">
+                    <input class="input" type="password" ng-model="user.check_password"  placeholder="确定密码">
+                    <!--<button class="loginbutton" style="float: left;width: 120px;margin-left: 25px;color: #C96054;"  ng-click="lastFoot()">上一步</button>-->
+                    <!--<button class="loginbutton" style="float: right;width: 120px;margin-right: 25px" ng-click="register()">确定</button>-->
+                    <!--<div style="margin-top: 5px">-->
+                        <!--<button class="button-clear" style="color: white;margin-left: 20px;float: left" ng-click="back()">取消</button>-->
+                        <!--<button class="button-clear" style="color: white;margin-right: 20px;float: right" ng-click="nextFoot()">下一步</button>-->
+                    <!--</div>-->
+                </form>
+            </div>
+        </div>
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </ion-content>
+</ion-view>

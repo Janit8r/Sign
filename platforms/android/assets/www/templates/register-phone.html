@@ -1,0 +1,54 @@
+<ion-view hide-nav-bar="true" class="viewbackgroundcolor" hide-back-button="true">
+    <ion-content class="padding" style="margin-top: 10%">
+
+        <!--<div class="list"  >-->
+            <!--<label class="item item-input" style="background-color: transparent">-->
+                <!--<i class="icon ion-iphone ion-icon-a phone" style="width: 40px"></i>-->
+                <!--<input type="text" placeholder="手机号码" style="font-size: 17px;" ng-model="user.registerPhone"/>-->
+            <!--</label>-->
+
+            <!--<label class="item item-input" style="background-color: transparent">-->
+                <!--<i class="icon ion-ios-barcode-outline ion-icon-a" style="width: 40px"></i>-->
+                <!--<input type="text" placeholder="验证码" style="font-size: 17px;margin-left: 8px" ng-model="user.code"/>-->
+            <!--</label>-->
+
+        <!--</div>-->
+            <!--<button class="button button-full button-block " style="opacity: 0.8" ng-click="getCode()">获取验证码</button>-->
+        <!--<div style="float: left;width: 49%">-->
+            <!--<button class="button button-block button-assertive " style=" opacity: 0.8" ng-click="back()" >取消</button>-->
+        <!--</div>-->
+        <!--<div style="float: right; width: 49%;">-->
+            <!--<button class="button button-block button-positive " style=" opacity: 0.8" ng-click="nextFoot()">下一步</button>-->
+        <!--</div>-->
+
+        <div align="center" class="padding">
+            <img src="./img/ionic.png" />
+        </div>
+        <div class="container" style="padding: 0 0">
+
+            <div>
+                <form class="form"  ng-model="form">
+                    <input class="input" type="text" ng-model="user.registerPhone"  placeholder="手机号">
+                    <input class="input" type="password" ng-model="user.code"  placeholder="验证码">
+                    <!--<button class="loginbutton"  ng-click="getCode()">获取验证码</button>-->
+                    <button class="loginbutton" id="code" ng-click="getCode()">
+                        获取验证码
+                    </button>
+                    <div style="margin-top: 5px">
+                        <button class="button-clear" style="color: white;margin-left: 20px;float: left" ng-click="back()"><u>取消</u></button>
+                        <button class="button-clear" style="color: white;margin-right: 20px;float: right" ng-click="nextFoot()"><u>下一步</u></button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,39 @@
+<ion-view view-title="我的请假" hide-back-button="true" style="background-color: #ecebf1">
+    <ion-nav-buttons class="backbuttonsdiv" side="left" >
+        <div  style="clear: inherit;"ng-click="back()" >
+            <div style="float: left"><i class="ion-chevron-left"  ng-click="back()"></i></div>
+            <div style="float: right"><span class="backbuttons" ng-click="back()">返回</span></div>
+        </div>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-refresher
+                pulling-text="下拉刷新..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
+        <!--<div class="card" ng-repeat="vacation in vacations | orderBy : 'VacationTime' : true">-->
+            <!--<div class="item item-text-wrap">-->
+                <!--<p>请假时间：{{vacation.BeginDate | date : 'yyyy-MM-dd'}} - {{vacation.EndDate | date : 'yyyy-MM-dd'}}</p>-->
+                <!--<div class="situation_pass" ng-show="vacation.Status==1">批准</div>-->
+                <!--<div class="situation_review" ng-show="vacation.Status==-1">审核中...</div>-->
+                <!--<div class="situation_rejected" ng-show="vacation.Status==0">不批准</div>-->
+                <!--<p>请假理由：{{vacation.Reason}}</p>-->
+            <!--</div>-->
+        <!--</div>-->
+
+            <div class="card" ng-repeat="vacation in vacations | orderBy: 'VacationTime':true">
+
+                <div  class="item item-text-wrap" >
+                    <p>请假时间：{{vacation.BeginDate | date : 'yyyy-MM-dd'}} ~ {{vacation.EndDate | date : 'yyyy-MM-dd'}}</p>
+                    <p >请假理由：{{vacation.Reason}}</p>
+                    <p>提交时间：{{vacation.VacationTime | date : 'yyyy-MM-dd'}}</p>
+                    <div class="situation_pass" ng-show="vacation.Status==1">已通过</div>
+                    <div class="situation_review" ng-show="vacation.Status==-1">审核中...</div>
+                    <div class="situation_rejected" ng-show="vacation.Status==0">不批准</div>
+                </div>
+
+            </div>
+
+
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,26 @@
+<ion-view view-title="调课详情" class="viewbackgroundcolor">
+    <ion-content>
+        <div class="card">
+            <div class="item item-text-wrap">
+                <p align="center" style="font-weight: bold;font-size: 18px;">调课申请书</p>
+                <br/>
+                <p style="margin-bottom: 10px;">申请教师 : {{transferclasses.TeacherName}}</p>
+                <!--<p style="margin-bottom: 10px;">调课科目 : {{transferclasses.subjects}}</p>-->
+                <p style="margin-bottom: 10px;">调课班级 : {{transferclasses.ClassName}}</p>
+                <p style="margin-bottom: 10px;">课程名称 : {{transferclasses.SubjectName}}</p>
+                <p style="margin-bottom: 10px;">调课原因 : {{transferclasses.ApplyReason}}</p>
+                <p style="margin-bottom: 10px;">原先上课时间 : {{transferclasses.OldBeginSubjectDate | date: 'yyyy/MM/dd HH:mm'}} - {{transferclasses.OldEndSubjectDate | date: 'HH:mm'}}</p>
+                <p style="margin-bottom: 10px;">原先上课地点 : {{transferclasses.OldAddress}}-{{transferclasses.OldClassRoom}}</p>
+                <p style="margin-bottom: 10px;">调课后上课时间 : {{transferclasses.NewBeginSubjectDate | date: 'yyyy/MM/dd HH:mm'}} - {{transferclasses.NewEndSubjectDate | date: 'HH:mm'}}</p>
+                <p style="margin-bottom: 10px;">调课后上课地点 : {{transferclasses.NewAddress}}-{{transferclasses.NewClassRoom}}</p>
+                <div class="situation_pass" ng-show="Status==1">已批准</div>
+                <div class="situation_review" ng-show="Status==-1">待审核</div>
+                <div class="situation_rejected" ng-show="Status==0">已驳回</div>
+            </div>
+        </div>
+        <div align="center" ng-if="!show">
+            <button class="button button-assertive" style="width: 47%" ng-click="rejected()">驳回</button>
+            <button class="button button-positive" style="width: 47%" ng-click="aggree()">同意</button>
+        </div>
+    </ion-content>
+</ion-view>

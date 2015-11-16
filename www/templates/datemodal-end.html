@@ -1,0 +1,21 @@
+<div class="modal">
+  <ion-header-bar class="" style="background-color: transparent">
+    <h1 class="title" style="color: white">请假结束时间</h1>
+    <button class="button button-icon icon ion-ios-close" style="color:white;" ng-click="close()"></button>
+  </ion-header-bar>
+  <ion-content has-header="true" >
+    <div class="padding">
+      <div pickadate ng-model="myendDate"></div>
+    </div>
+    <div align="center">
+      <button style="color: white;background-color: #386def;" >
+        选择时间
+        <input type="time" name="user_date" ng-model="datetime" style="text-align: center">
+      </button>
+    </div>
+    <div class="padding">
+      <button class="button button-full button-positive" style="opacity: 0.8;" ng-click="closedateModal_end(myendDate,datetime)">确定选择时间</button>
+    </div>
+
+  </ion-content>
+</div>

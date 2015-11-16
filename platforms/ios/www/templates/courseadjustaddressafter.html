@@ -1,0 +1,27 @@
+<div class="modal">
+    <header class="bar bar-header" >
+        <h1 class="title" style="color: white">调课班级</h1>
+    </header>
+    <ion-content class="viewbackgroundcolor" has-header="true">
+        <br/><br/>
+        <div class="list" style="opacity: 0.7">
+            <label class="item" ng-click="choosecoursebuilding()">
+                <span style="margin-right: 15px;">选择教学楼 :</span>
+                <span class="item-note">{{beforebuild}}</span>
+            </label>
+            <label class="item item-input">
+                <span style="margin-right: 15px;">教室号 :</span>
+                <input type="text" style="text-align: right" class="item-note" ng-model="adjust.classroom">
+            </label>
+        </div>
+        <div class="padding">
+            <div style="float: left;width: 49%;opacity: 0.8" ng-click="closeaddressafter()">
+                <button class="button button-block button-assertive" >取消</button>
+            </div>
+            <div style="float: right; width: 49%;opacity: 0.8" ng-click="determineaddressafter()">
+                <button class="button button-block button-positive">确定</button>
+            </div>
+        </div>
+    </ion-content>
+</div>
+

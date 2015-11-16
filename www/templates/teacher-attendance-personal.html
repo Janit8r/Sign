@@ -1,0 +1,14 @@
+<ion-view view-title="班级成员列表"  style="background-color: #ecebf1">
+    <ion-content>
+        <div class="list">
+            <a class="item item-avatar item-icon-right" ng-repeat="attendance_student in attendance_students" href="#/teacher_attendance_college/{{collegeId}}/{{professionId}}/{{class._id}}/{{attendance_student.StudentId}};{{attendance_student.StudentName}}" >
+                <img src={{attendance_student.Photo}}>
+                <div style="margin-top:10px">
+                    {{attendance_student.StudentName}}
+                    <h2 class="item-note">{{attendance_student.Ctnot}}次旷课</h2>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </div>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

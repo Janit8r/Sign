@@ -1,0 +1,20 @@
+<ion-view view-title="班级成员"  style="background-color: #ecebf1">
+
+    <ion-content>
+
+        <ion-list style="color: white">
+            <!-- 绑定跳转的地址，系统自动寻找id-->
+            <ion-item class=" item-avatar item-icon-right" ng-repeat="student in students" type="item-text-wrap" href="#/teacher_college/{{collegeId}}/{{professionId}}/{{classId}}/{{student._id}}">
+                <!-- 绑定的头像图片-->
+                <img ng-src="{{student.Photo}}">
+                <!-- 绑定的学生姓名-->
+                <h2 >{{student.StudentName}}</h2>
+                <!-- 绑定的学生联系方式-->
+                <p>{{student.Phone}}</p>
+                <!-- 添加向右箭头按钮-->
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+</ion-view>

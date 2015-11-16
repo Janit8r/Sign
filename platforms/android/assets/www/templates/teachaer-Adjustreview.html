@@ -1,0 +1,25 @@
+<ion-view view-title="调课审核" hide-back-button="true" class="viewbackgroundcolor">
+    <ion-nav-buttons class="backbuttonsdiv" side="left" >
+        <div  style="clear: inherit;"ng-click="return()" >
+            <div style="float: left"><i class="ion-chevron-left"  ng-click="return()"></i></div>
+            <div style="float: right"><span class="backbuttons" ng-click="return()">返回</span></div>
+        </div>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-refresher
+                pulling-text="下拉刷新..."
+                on-refresh="doRefresh()"
+                >
+        </ion-refresher>
+        <ion-list style="color: white;" ng-repeat="transferclass in transferclasses">
+            <ion-item class="item-icon-right" style="opacity: 0.7" type="item-text-wrap"href="#/teacher_Adjustreview/{{transferclass._id}}">
+                <div style="float: left;color: black">{{transferclass.TeacherName}}</div>
+                <div class="item-note" style="float: left;margin-left: 20px;" >提交时间：{{transferclass.ApplyTime | date : 'yyyy-MM-dd'}}</div>
+                <div class="situation_pass" ng-show="transferclass.Status==1">已批准</div>
+                <div class="situation_review" ng-show="transferclass.Status==-1">待审核</div>
+                <div class="situation_rejected" ng-show="transferclass.Status==0">已驳回</div>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

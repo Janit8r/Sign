@@ -1,0 +1,19 @@
+<ion-view view-title="签到考勤" >
+    <ion-content class="padding">
+        <div align="center">
+            <!--<button class="button button-positive button-block" ng-click="checkbluetooth()" ng-show="bluebtn == 3">扫描蓝牙</button>-->
+            <!--<button class="button button-positive button-block" disabled readonly ng-show="bluebtn == -3">扫描蓝牙</button>-->
+            <button class="button button-positive button-block" ng-show="signbutton == 0"   ng-click="sign()">签   到</button>
+            <button class="button button-positive button-block" ng-show="signbutton == -1" disabled readonly>签   到</button>
+            <button class="button button-positive button-block" ng-show="signbutton == 1"  ng-click="signout()">签   退</button>
+            <button class="button button-positive button-block" ng-show="signbutton == -2" disabled readonly>签   退</button>
+        </div>
+        <div>
+            <div align="center" style="margin-top: {{screenheight}}px;" ng-show="wifialert_show == 0"><h1 style="color:white;">检测不到签到蓝牙</h1></div>
+            <div align="center" style="margin-top: {{screenheight}}px;" ng-show="wifialert_show == 1"><h1 style="color:white;font-size: 28px">检测到蓝牙，可以签到了！</h1></div>
+            <div align="center" style="margin-top: {{screenheight}}px;" ng-show="wifialert_show == 2"><h1 style="color:white;">您还未签到</h1></div>
+            <div align="center" style="margin-top: {{screenheight}}px;" ng-show="wifialert_show == 3"><h1 style="color:white;">您已签到</h1></div>
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E78AA9D3-6C5C-448F-96BB-C671DC56D476</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SignAssist</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D6DBCD6A6CF712D429CB1BB9A101E280FB20D010</key>
+		<string>https://github.com/Linhehe/SchoolClienAndroid.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>platforms/ios/SignAssist.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D6DBCD6A6CF712D429CB1BB9A101E280FB20D010</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Linhehe/SchoolClienAndroid.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D6DBCD6A6CF712D429CB1BB9A101E280FB20D010</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D6DBCD6A6CF712D429CB1BB9A101E280FB20D010</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SchoolClienAndroid1</string>
+		</dict>
+	</array>
+</dict>
+</plist>

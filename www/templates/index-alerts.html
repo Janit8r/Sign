@@ -1,0 +1,38 @@
+<!--<ion-view view-title="消息通知" class="viewbackgroundcolor" hide-back-button="true">-->
+    <!--<ion-content>-->
+<ion-view view-title="信息" style="background-color: #ecebf1"  hide-back-button="true">
+    <ion-content>
+        <div class="padding">
+            <ion-refresher
+                pulling-text="下拉刷新..."
+                on-refresh="doRefresh()">
+            </ion-refresher>
+            <div class="card" ng-repeat="message in messages | orderBy : 'MessageDate':true">
+                <div class="item item-divider item-positive" style="background-color: #339999" >{{message.Title}}</div>
+                <div class="item item-body">
+                    <div>
+                        {{message.Content}}
+                    </div>
+                    <div align="right">
+                        {{message.MessageDate | date : 'yyyy-MM-dd hh:mm:ss EEEE'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+<style type="text/css">
+    .card{
+        border: 0;
+        border-radius: 0;
+        box-shadow:1px 1px 20px rgba(51, 153, 153, 0.58);
+        -moz-box-shadow:1px 1px 20px rgba(51, 153, 153, 0.58);
+        -webkit-box-shadow:1px 1px 20px rgba(51, 153, 153, 0.58);
+    }
+</style>
+
+
+
+
+    <!--</ion-content>-->
+<!--</ion-view>-->

@@ -1,0 +1,84 @@
+<style>
+    .slide-tab{
+        display: table;
+        overflow: hidden;
+        margin: 0;
+        width: 100%;
+        /*background-color: #369FAB;*/
+        /*border-bottom: 2px solid #00897B;*/
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        border-top: 1px solid rgb(209, 209, 209);
+        background-color: #fbfbfb;
+    }
+
+    .slide-tab li{
+        float: left;
+        line-height: 1px;
+        overflow: hidden;
+        padding: 0;
+        width: 33.3%;
+        height: 8vh;
+        text-align: center;
+        font-size: 4.8vh;
+        margin-top: 0.5vh;
+        /*background-color: #369FAB*/
+    }
+
+    .slide-tab a{
+        background-color: #fbfbfb;
+        /*border-top: 2px;*/
+        /*#D1D1D1*/
+        color: #7d7d7d;
+        font-weight: 200;
+        display: block;
+        outline: none;
+        padding: 0 20px;
+        text-decoration: none;
+    }
+    label{
+        font-size: 2vh;
+    }
+
+
+</style>
+<ion-view view-title="{{title}}" hide-back-button="true">
+
+    <ion-content>
+        <ion-slide-box on-slide-changed="slideChanged(index)" style="width: 100%;height: 86vh;" active-slide="slideIndex" auto-play="flase" does-continue="false" show-pager="flase">
+
+            <ion-slide>
+                <div style="width: 100%;height: 100vh;float: left" ui-view="alerts">
+                </div>
+                <!--<ion-nav-view name="alerts"></ion-nav-view>-->
+            </ion-slide>
+            <ion-slide>
+                <div style="width: 100%;height: 100vh;float: left" ui-view="study">
+                </div>
+                <!--<ion-nav-view name="study"></ion-nav-view>-->
+            </ion-slide>
+            <ion-slide>
+                <div style="width: 100%;height: 100vh;float: left" ui-view="information">
+                </div>
+                <!--<ion-nav-view name="information"></ion-nav-view>-->
+            </ion-slide>
+
+        </ion-slide-box>
+
+    </ion-content>
+    <div class="row">
+        <ul class="slide-tab" >
+            <li><a class="ion-ios-email{{show1}}" style="color: {{color1}}" ng-click="activeSlide(0)">
+                <div><label>信息</label></div>
+            </a></li>
+            <li><a class="ion-ios-book{{show2}}" style="color: {{color2}}" ng-click="activeSlide(1)">
+                <div><label>学习</label></div>
+            </a></li>
+            <li><a class="ion-ios-information{{show3}}"  style="color: {{color3}}" ng-click="activeSlide(2)">
+                <div><label>个人信息</label></div>
+            </a></li>
+        </ul>
+    </div>
+</ion-view>
+

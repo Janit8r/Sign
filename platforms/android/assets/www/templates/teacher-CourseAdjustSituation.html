@@ -1,0 +1,26 @@
+<ion-view view-title="申请情况" class="viewbackgroundcolor" hide-back-button="true">
+    <ion-nav-buttons class="backbuttonsdiv" side="left" >
+        <div  style="clear: inherit;"ng-click="back()" >
+            <div style="float: left"><i class="ion-chevron-left"  ng-click="back()"></i></div>
+            <div style="float: right"><span class="backbuttons" ng-click="back()">返回</span></div>
+        </div>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="card" ng-repeat="transferclass in transferclasses" style="padding-bottom: 2vh;">
+            <div class="item item-text-wrap" >
+                <p style="margin-bottom: 10px;">申请教师 : {{transferclass.TeacherName}}</p>
+                <p style="margin-bottom: 10px;">课程名称 : {{transferclass.SubjectName}}</p>
+                <p style="margin-bottom: 10px;">调课班级 : {{transferclass.ClassName}}</p>
+                <p style="margin-bottom: 10px;">调课原因 : {{transferclass.ApplyReason}}</p>
+                <p style="margin-bottom: 10px;">原先上课时间 : {{transferclass.OldBeginSubjectDate | date: 'yyyy/MM/dd HH:mm'}} - {{transferclass.OldEndSubjectDate | date: 'HH:mm'}}</p>
+                <p style="margin-bottom: 10px;">原先上课地点 : {{transferclass.OldAddress}}-{{transferclass.OldClassRoom}}</p>
+                <p style="margin-bottom: 10px;">调课后上课时间 : {{transferclass.NewBeginSubjectDate | date: 'yyyy/MM/dd HH:mm'}} - {{transferclass.NewEndSubjectDate | date: 'HH:mm'}}</p>
+                <p style="margin-bottom: 10px;">调课后上课地点 : {{transferclass.NewAddress}}-{{transferclass.NewClassRoom}}</p>
+
+                <div class="situation_pass" ng-show="transferclass.Status==1">已批准</div>
+                <div class="situation_review" ng-show="transferclass.Status==-1">待审核</div>
+                <div class="situation_rejected" ng-show="transferclass.Status==0">已驳回</div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

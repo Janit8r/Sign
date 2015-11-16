@@ -1,0 +1,19 @@
+<ion-view view-title="学院列表"  hide-back-button="true"  style="background-color: #ecebf1">
+    <ion-nav-buttons class="backbuttonsdiv" side="left" >
+        <div  style="clear: inherit;"ng-click="return()" >
+            <div style="float: left"><i class="ion-chevron-left"  ng-click="return()"></i></div>
+            <div style="float: right"><span class="backbuttons" ng-click="return()">返回</span></div>
+        </div>
+    </ion-nav-buttons>
+    <ion-content>
+
+        <ion-list style="color: white;">
+            <!-- 绑定跳转的地址，系统自动寻找id-->
+            <ion-item class="item-icon-right" ng-repeat="college in colleges"  type="item-text-wrap" href="#/teacher_attendance_college/{{college._id}}">
+                <h2>{{college.CollegeName}}</h2>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+</ion-view>

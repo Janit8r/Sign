@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/facesignin_layout_rootRel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/loading_background" >
+
+   <LinearLayout
+        android:layout_width="240dip"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="人脸注册"
+            android:textColor="#ffffffff"
+            android:textSize="26sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请先点击下方+号添加头像，再进行注册"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <RelativeLayout
+            android:id="@+id/facesignin_layout_imageRel"
+            android:layout_width="120dip"
+            android:layout_height="120dip"
+            android:layout_marginTop="50dip"
+            android:background="@drawable/image_kuang_xu"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingBottom="1.5dip"
+            android:paddingLeft="1.5dip"
+            android:paddingRight="1.5dip"
+            android:paddingTop="1.5dip" >
+
+            <ImageView
+                android:id="@+id/facesignin_layout_image"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:scaleType="centerCrop" />
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/facesignin_layout_shibieBtn"
+            style="@style/custom_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:layout_marginLeft="30dip"
+            android:layout_marginRight="30dip"
+            android:layout_marginTop="45dip"
+            android:gravity="center"
+            android:text="注册" />
+
+ 
+
+        <Button
+            android:id="@+id/facesignin_layout_returnBtn"
+            style="@style/custom_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:layout_marginLeft="30dip"
+            android:layout_marginRight="30dip"
+            android:layout_marginTop="15dip"
+            android:text="返回" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/facesignin_layout_progressbar"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

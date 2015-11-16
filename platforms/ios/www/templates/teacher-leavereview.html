@@ -1,0 +1,24 @@
+<ion-view view-title="请假审核" class="viewbackgroundcolor" hide-back-button="true">
+    <ion-nav-buttons class="backbuttonsdiv" side="left" >
+        <div  style="clear: inherit;"ng-click="return()" >
+            <div style="float: left"><i class="ion-chevron-left"  ng-click="return()"></i></div>
+            <div style="float: right"><span class="backbuttons" ng-click="return()">返回</span></div>
+        </div>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-refresher
+                pulling-text="下拉刷新..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
+        <ion-list style="color: white;">
+            <ion-item class="item-icon-right" style="opacity: 0.7" type="item-text-wrap" ng-repeat="vacation in vacations | orderBy : 'VacationTime':true" href="#/teacher_leavereview/{{vacation._id}} {{vacation.Student.Classes}}">
+                <div style="float: left;color: black">{{vacation.Student.StudentName}}</div>
+                <div class="item-note" style="float: left;margin-left: 20px;" >提交时间：{{vacation.VacationTime | date : 'yyyy-MM-dd'}}</div>
+                <div class="situation_pass" ng-show="vacation.Status==1">已批准</div>
+                <div class="situation_review" ng-show="vacation.Status==-1">待审核</div>
+                <div class="situation_rejected" ng-show="vacation.Status==0">已驳回</div>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
