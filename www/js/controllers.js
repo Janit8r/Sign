@@ -1550,6 +1550,7 @@ angular.module('starter.controllers', ['pickadate'])
             });
             ble.supportBle(function (message) {
 
+
                 var res = JSON.parse(message);
 
                 if (res.result == "ble") {//如果支持ble

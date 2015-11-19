@@ -21,10 +21,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"DatePickerPlugin\"><param name=\"android-package\" value=\"com.plugin.datepicker.DatePickerPlugin\" /></feature>",
                             "count": 1
                         },
@@ -50,6 +46,10 @@
                         },
                         {
                             "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -99,7 +99,7 @@
                     ],
                     "/manifest/application": [
                         {
-                            "xml": "<activity android:label=\"@string/multi_app_name\" android:name=\"com.synconset.MultiImageChooserActivity\" android:theme=\"@android:style/Theme.Holo.Light\"></activity>",
+                            "xml": "<activity android:label=\"@string/multi_app_name\" android:name=\"com.synconset.MultiImageChooserActivity\" android:theme=\"@android:style/Theme.Holo.Light\"><intent-filter /></activity>",
                             "count": 1
                         }
                     ]
@@ -115,12 +115,6 @@
             "PACKAGE_NAME": "com.mybofeng.sign"
         },
         "com.ionic.keyboard": {
-            "PACKAGE_NAME": "com.mybofeng.sign"
-        },
-        "com.jcesarmobile.IDFVPlugin": {
-            "PACKAGE_NAME": "com.mybofeng.sign"
-        },
-        "com.synconset.imagepicker": {
             "PACKAGE_NAME": "com.mybofeng.sign"
         },
         "cordova-plugin-datepicker": {
@@ -142,6 +136,9 @@
             "PACKAGE_NAME": "com.mybofeng.sign"
         },
         "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "com.synconset.imagepicker": {
             "PACKAGE_NAME": "com.mybofeng.sign"
         }
     },
@@ -169,22 +166,6 @@
             "pluginId": "com.ionic.keyboard",
             "clobbers": [
                 "cordova.plugins.Keyboard"
-            ]
-        },
-        {
-            "file": "plugins/com.jcesarmobile.IDFVPlugin/www/IDFVPlugin.js",
-            "id": "com.jcesarmobile.IDFVPlugin.IDFVPlugin",
-            "pluginId": "com.jcesarmobile.IDFVPlugin",
-            "clobbers": [
-                "IDFVPlugin"
-            ]
-        },
-        {
-            "file": "plugins/com.synconset.imagepicker/www/imagepicker.js",
-            "id": "com.synconset.imagepicker.ImagePicker",
-            "pluginId": "com.synconset.imagepicker",
-            "clobbers": [
-                "plugins.imagePicker"
             ]
         },
         {
@@ -415,6 +396,14 @@
             "pluginId": "cordova-plugin-network-information",
             "clobbers": [
                 "Connection"
+            ]
+        },
+        {
+            "file": "plugins/com.synconset.imagepicker/www/imagepicker.js",
+            "id": "com.synconset.imagepicker.ImagePicker",
+            "pluginId": "com.synconset.imagepicker",
+            "clobbers": [
+                "plugins.imagePicker"
             ]
         }
     ]

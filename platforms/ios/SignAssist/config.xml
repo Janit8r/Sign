@@ -20,12 +20,6 @@
     <feature name="Keyboard">
         <param name="ios-package" onload="true" value="IonicKeyboard" />
     </feature>
-    <feature name="IDFVPlugin">
-        <param name="ios-package" value="IDFVPlugin" />
-    </feature>
-    <feature name="ImagePicker">
-        <param name="ios-package" value="SOSPicker" />
-    </feature>
     <feature name="DatePicker">
         <param name="ios-package" value="DatePicker" />
     </feature>
@@ -48,6 +42,9 @@
     </feature>
     <feature name="Face">
         <param name="ios-package" value="CDFace" />
+    </feature>
+    <feature name="ImagePicker">
+        <param name="ios-package" value="SOSPicker" />
     </feature>
     <icon height="57" src="resources/ios/icon/icon.png" width="57" />
     <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />

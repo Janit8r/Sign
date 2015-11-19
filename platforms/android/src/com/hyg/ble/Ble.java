@@ -30,39 +30,22 @@ import com.baidu.location.LocationClientOption.LocationMode;
 
 public class Ble extends CordovaPlugin {
 
-	@SuppressLint("NewApi")
-	private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
-		@Override
-		public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
-			List<ADStructure> structures = ADPayloadParser.getInstance().parse(scanRecord);
-			for (int i = 0; i < structures.size(); i++) {
-				if (structures.get(i).getType() == 9) {
-					LocalName name = (LocalName) structures.get(i);
-					if (name.getLocalName().equals(_name)) {
-						mHandler.removeCallbacks(r);
-						PluginResult rr = new PluginResult(PluginResult.Status.OK,
-								"{\"result\":\"success\",\"type\":\"blue\"}");
-						rr.setKeepCallback(true);
-						mBluetoothAdapter.stopLeScan(this);
-						_context.sendPluginResult(rr);
-					}
-				}
-			}
-
-		}
-	};
+	//
+	
 	private BluetoothAdapter mBluetoothAdapter;
 	private boolean mScanning;
 	private Handler mHandler = new Handler();
 	private String _name = null;
+	private float _lat=0;
+	private float _lng=0;
 	private CallbackContext _context;
 	Runnable r = new Runnable() {
-		@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+	
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
 			mScanning = false;
-			mBluetoothAdapter.stopLeScan(mLeScanCallback);
+			//mBluetoothAdapter.stopLeScan(mLeScanCallback);
 			PluginResult r = new PluginResult(PluginResult.Status.OK, "{\"result\":\"false\",\"type\":\"blue\"}");
 			r.setKeepCallback(true);
 
@@ -82,65 +65,47 @@ public class Ble extends CordovaPlugin {
 		mLocationClient.setLocOption(option);
 	}
 
+	
+
+	static double DEF_PI = 3.14159265359; 
+		static double DEF_2PI= 6.28318530712; 
+		static double DEF_PI180= 0.01745329252;
+		static double DEF_R =6370693.5; 
+	public static double GetShortDistance(double lon1, double lat1, double lon2, double lat2)	{	
+			double ew1, ns1, ew2, ns2;		double dx, dy, dew;		double distance;		// 角度转换为弧度	
+			ew1 = lon1 * DEF_PI180;		ns1 = lat1 * DEF_PI180;		ew2 = lon2 * DEF_PI180;		
+			ns2 = lat2 * DEF_PI180;		// 经度差		
+			dew = ew1 - ew2;		// 若跨东经和西经180 度，进行调整	
+			if (dew > DEF_PI)		dew = DEF_2PI - dew;	
+			else if (dew < -DEF_PI)		dew = DEF_2PI + dew;		
+			dx = DEF_R * Math.cos(ns1) * dew; // 东西方向长度(在纬度圈上的投影长度)	
+			dy = DEF_R * (ns1 - ns2); // 南北方向长度(在经度圈上的投影长度)		// 勾股定理求斜边长		
+			distance = Math.sqrt(dx * dx + dy * dy);	
+			return distance;	
+			}
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-	@Override
-	public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
-		_context = callbackContext;
-		if (action.equals("scanGps")) {
-			mLocationClient = new LocationClient(cordova.getActivity().getApplicationContext()); // 声明LocationClient类
-			mLocationClient.registerLocationListener(new  BDLocationListener (){
-
+    private void ScanBlue(){
+    	 BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
+				
 				@Override
-				public void onReceiveLocation(BDLocation location) {
-					// Receive Location
-					switch (location.getLocType()) {
-					case BDLocation.TypeGpsLocation:
-					case BDLocation.TypeNetWorkLocation:
-					case BDLocation.TypeOffLineLocation:
-						mLocationClient.stop();
-						PluginResult r = new PluginResult(PluginResult.Status.OK,
-								"{\"result\":\"success\",\"type\":\"gps\",\"lng\":\"" + location.getLongitude()
-										+ "\",\"lat\":\"" + location.getLatitude() + "\"}");
-						r.setKeepCallback(true);
-						_context.sendPluginResult(r);
-						break;
-					case BDLocation.TypeServerError:
-					case BDLocation.TypeNetWorkException:
-					case BDLocation.TypeCriteriaException:
-
-						PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"fail\",\"type\":\"gps\"}");
-						rr.setKeepCallback(true);
-						_context.sendPluginResult(rr);
-
-						break;
-					default:
-						break;
+				public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
+					List<ADStructure> structures = ADPayloadParser.getInstance().parse(scanRecord);
+					for (int i = 0; i < structures.size(); i++) {
+						if (structures.get(i).getType() == 9) {
+							LocalName name = (LocalName) structures.get(i);
+							if (name.getLocalName().equals(_name)) {
+								mHandler.removeCallbacks(r);
+								PluginResult rr = new PluginResult(PluginResult.Status.OK,
+										"{\"result\":\"success\",\"type\":\"blue\"}");
+								rr.setKeepCallback(true);
+								mBluetoothAdapter.stopLeScan(this);
+								_context.sendPluginResult(rr);
+							}
+						}
 					}
 				}
-			});
-			initLocation();
-			mLocationClient.start();
-		}
-		if (action.equals("supportBle")) {
-			PackageManager pm = cordova.getActivity().getApplicationContext().getPackageManager();
-			boolean hasBLE = pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
-			if (hasBLE) {
-				PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"ble\"}");
-				rr.setKeepCallback(true);
-				_context.sendPluginResult(rr);
-			} else {
-				PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"gps\"}");
-				rr.setKeepCallback(true);
-				_context.sendPluginResult(rr);
-			}
-
-		}
-		if (action.equals("exit")) {
-			System.exit(0);
-		}
-		if (action.equals("scanBlue")) {
-
-			_name = data.getString(0);
+			};
+			
 			//
 			mScanning = true;
 			// 蓝牙定位
@@ -161,7 +126,9 @@ public class Ble extends CordovaPlugin {
 					
 					} else {
 						mHandler.postDelayed(r, 10000);
-						mBluetoothAdapter.startLeScan(mLeScanCallback);
+						if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.JELLY_BEAN_MR2){
+							mBluetoothAdapter.startLeScan(mLeScanCallback);
+						}
 					}
 				} else {
 					PluginResult rr = new PluginResult(PluginResult.Status.OK,
@@ -175,6 +142,86 @@ public class Ble extends CordovaPlugin {
 				rr.setKeepCallback(true);
 				_context.sendPluginResult(rr);
 			}
+    }
+	@Override
+	public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+		_context = callbackContext;
+
+		if (action.equals("scanGps")) {
+			
+			_lat = Float.parseFloat(data.getString(0));
+			_lng = Float.parseFloat(data.getString(1));
+		
+
+		
+			mLocationClient = new LocationClient(cordova.getActivity().getApplicationContext()); // 声明LocationClient类
+			mLocationClient.registerLocationListener(new  BDLocationListener (){
+
+				@Override
+				public void onReceiveLocation(BDLocation location) {
+					// Receive Location
+					switch (location.getLocType()) {
+					case BDLocation.TypeGpsLocation:
+					case BDLocation.TypeNetWorkLocation:
+					case BDLocation.TypeOffLineLocation:
+						mLocationClient.stop();
+						
+						float dis = (float) GetShortDistance((float)location.getLongitude(),(float)location.getLatitude(),_lng,_lat);
+						if(dis <100)
+						{
+							PluginResult rrk = new PluginResult(PluginResult.Status.OK,"{\"result\":\"success\"}");
+							rrk.setKeepCallback(true);
+							_context.sendPluginResult(rrk);
+						}else
+						{
+							PluginResult rrk = new PluginResult(PluginResult.Status.OK,"{\"result\":\"fail\",\"msg\":\"你不在所规定的距离签到\"}");
+							rrk.setKeepCallback(false);
+							_context.sendPluginResult(rrk);
+						}
+						
+						break;
+					case BDLocation.TypeServerError:
+					case BDLocation.TypeNetWorkException:
+					case BDLocation.TypeCriteriaException:
+
+						PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"fail\",\"type\":\"gps\"}");
+						rr.setKeepCallback(true);
+						_context.sendPluginResult(rr);
+
+						break;
+					default:
+						break;
+					}
+					_context=null;
+				}
+			});
+			initLocation();
+			mLocationClient.start();
+		}
+		if (action.equals("supportBle")) {
+			
+			PackageManager pm = cordova.getActivity().getApplicationContext().getPackageManager();
+			 if(Build.VERSION.SDK_INT >=18){
+				 PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"blue\"}");
+					rr.setKeepCallback(true);
+					
+					_context.sendPluginResult(rr);
+			 }else
+			 {
+				 PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"gps\"}");
+					rr.setKeepCallback(true);
+					_context.sendPluginResult(rr);
+			 }
+			 
+			 _context = null;
+
+		}
+		if (action.equals("exit")) {
+			System.exit(0);
+		}
+		if (action.equals("scanBlue")) {
+			_name = data.getString(0);
+			this.ScanBlue();
 			return true;
 
 		} else {

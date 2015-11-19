@@ -25,22 +25,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/com.jcesarmobile.IDFVPlugin/www/IDFVPlugin.js",
-        "id": "com.jcesarmobile.IDFVPlugin.IDFVPlugin",
-        "pluginId": "com.jcesarmobile.IDFVPlugin",
-        "clobbers": [
-            "IDFVPlugin"
-        ]
-    },
-    {
-        "file": "plugins/com.synconset.imagepicker/www/imagepicker.js",
-        "id": "com.synconset.imagepicker.ImagePicker",
-        "pluginId": "com.synconset.imagepicker",
-        "clobbers": [
-            "plugins.imagePicker"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-datepicker/www/ios/DatePicker.js",
         "id": "cordova-plugin-datepicker.DatePicker",
         "pluginId": "cordova-plugin-datepicker",
@@ -262,6 +246,14 @@ module.exports = [
         "pluginId": "cordova-plugin-network-information",
         "clobbers": [
             "Connection"
+        ]
+    },
+    {
+        "file": "plugins/com.synconset.imagepicker/www/imagepicker.js",
+        "id": "com.synconset.imagepicker.ImagePicker",
+        "pluginId": "com.synconset.imagepicker",
+        "clobbers": [
+            "plugins.imagePicker"
         ]
     }
 ];

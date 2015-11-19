@@ -1550,6 +1550,7 @@ angular.module('starter.controllers', ['pickadate'])
             });
             ble.supportBle(function (message) {
 
+                alert(message);
                 var res = JSON.parse(message);
 
                 if (res.result == "ble") {//如果支持ble
@@ -1588,7 +1589,7 @@ angular.module('starter.controllers', ['pickadate'])
 
                     ble.scanGps("22.130975", "113.361343", function (message) {
                         //
-
+                        alert(message);
                         var res = JSON.parse(message);
                         if (res.result == 'success') {
                             //
