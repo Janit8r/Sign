@@ -1,0 +1,45 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "com.hyg.ble": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "com.hyg.face": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "com.ionic.keyboard": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        },
+        "com.synconset.imagepicker": {
+            "PACKAGE_NAME": "com.mybofeng.sign"
+        }
+    },
+    "dependent_plugins": {}
+}

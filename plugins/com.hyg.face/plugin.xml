@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="com.hyg.face"
+        version="0.7.0">
+
+  <name>Face</name>
+
+  <engines>
+    <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+
+  <asset src="www/face.js" target="js/face.js"/>
+
+  <js-module src="www/face.js" name="face">
+    <clobbers target="face" />
+  </js-module>
+
+  <platform name="android">
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="Face">
+        <param name="android-package" value="com.hyg.face.Face"/>
+      </feature>
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+      <uses-permission android:name="android.permission.CAMERA" />
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+      <uses-permission android:name="android.permission.INTERNET" />
+      <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    </config-file>
+    <source-file src="src/android/face.java" target-dir="src/com/hyg/face/"/>
+  </platform>
+
+  <platform name="ios">
+
+    <config-file target="config.xml" parent="/widget">
+      <feature name="Face">
+        <param name="ios-package" value="CDFace" />
+      </feature>
+    </config-file>
+
+    <header-file src="src/ios/CDFace.h" target-dir="FacePlugin"/>
+    <source-file src="src/ios/CDFace.m" target-dir="FacePlugin"/>
+  </platform>
+
+  <platform name="wp7">
+    <source-file src="src/wp7/Hello.cs"/>
+  </platform>
+
+</plugin>
