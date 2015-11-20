@@ -5,7 +5,7 @@ var time;
 var get_wifitime;
 var check_stuwifitime;
 
-angular.module('starter.controllers', ['pickadate'])
+angular.module('starter.controllers', ['pickadate', 'ionic-timepicker'])
     //登录页面控制器
     .controller('LoginCtrl', function ($scope, $state, $ionicPopup, $ionicLoading, $http, $timeout, $ionicModal, $cordovaDevice) {
         ////
@@ -1267,30 +1267,38 @@ angular.module('starter.controllers', ['pickadate'])
         };
         //提交按钮
         $scope.submit = function () {
+            if ($scope.datepicker_start == '' || $scope.datepicker_end == '' || $scope.leave.why == '') {
+                $ionicPopup.alert({
+                    title: '提示',
+                    template: '请完善请假信息'
+                })
+            } else {
+                $http.post(httparr + '/vacation', {
+                    Student: window.localStorage['_id'],
+                    ClassesId: window.localStorage['Classes'],
+                    BeginDate: $scope.datepicker_start,
+                    EndDate: $scope.datepicker_end,
+                    Reason: $scope.leave.why,
+                    VacationTime: new Date()
+                })
+                    .success(function (data) {
+                        //
+                        $ionicPopup.alert({
+                            title: '提示',
+                            template: '提交申请成功'
+                        }).then(function () {
+                            $scope.datepicker_start = '';
+                            $scope.datepicker_end = '';
+                            $scope.leave.why = '';
+                        })
+                    }).error(function (err) {
+                        //
+                    }).then(function () {
+                        //
+                    });
 
-            $http.post(httparr + '/vacation', {
-                Student: window.localStorage['_id'],
-                ClassesId: window.localStorage['Classes'],
-                BeginDate: $scope.datepicker_start,
-                EndDate: $scope.datepicker_end,
-                Reason: $scope.leave.why,
-                VacationTime: new Date()
-            })
-                .success(function (data) {
-                    //
-                }).error(function (err) {
-                    //
-                }).then(function () {
-                    //
-                });
-            $ionicPopup.alert({
-                title: '提示',
-                template: '提交申请成功'
-            }).then(function () {
-                $scope.datepicker_start = '';
-                $scope.datepicker_end = '';
-                $scope.leave.why = '';
-            })
+            }
+
         };
         //显示与隐藏
         $scope.display = 'none';
@@ -1301,10 +1309,51 @@ angular.module('starter.controllers', ['pickadate'])
                 $scope.display = 'none'
             }
         }
+        $scope.beginTime="选取开始时点"
+        $scope.beginTimePickerObject = {
+            inputEpochTime: ((new Date()).getHours() * 60 * 60 + (new Date()).getMinutes() * 60),  //Optional
+            step: 10,  //Optional
+            format: 24,  //Optional
+            titleLabel: '24-hour Format',  //Optional
+            closeLabel: '取消',  //Optional
+            setLabel: '选择',  //Optional
+            setButtonType: 'button-balanced',  //Optional
+            closeButtonType: 'button-positive',  //Optional
+            callback: function (val) {    //Mandatory
+                //
+                if(val != null) {
+                    $scope.beginTimePickerObject.inputEpochTime = val;
+                    $scope.beginSelectedTime = new Date(val * 1000);
+                    $scope.beginTime = $scope.beginSelectedTime.getUTCHours() + ':' + $scope.beginSelectedTime.getMinutes();
+                }
+                //
+            }
+        };
+        $scope.endTime="选取结束时点"
+        $scope.endTimePickerObject = {
+            inputEpochTime: ((new Date()).getHours() * 60 * 60 + (new Date()).getMinutes() * 60),  //Optional
+            step: 10,  //Optional
+            format: 24,  //Optional
+            titleLabel: '24-hour Format',  //Optional
+            closeLabel: '取消',  //Optional
+            setLabel: '选择',  //Optional
+            setButtonType: 'button-balanced',  //Optional
+            closeButtonType: 'button-positive',  //Optional
+            callback: function (val) {    //Mandatory
+                //
+                if(val != null) {
+                    $scope.endTimePickerObject.inputEpochTime = val;
+                    $scope.endSelectedTime = new Date(val * 1000);
+                    $scope.endTime = $scope.endSelectedTime.getUTCHours() + ':' + $scope.endSelectedTime.getMinutes();
+                }
+                //
+            }
+        };
         //开始日期选择器
         $ionicModal.fromTemplateUrl('templates/datemodal-start.html',
             function (modal) {
                 $scope.datemodal_statr = modal;
+
             },
             {
                 // Use our scope for the scope of the modal to keep it simple
@@ -1347,29 +1396,45 @@ angular.module('starter.controllers', ['pickadate'])
         }
         //关闭日期选择
         $scope.closedateModal = function (modal, datetime) {
-            $scope.datemodal_statr.hide();
-            $scope.datetime = datetime.getHours() + ':' + datetime.getMinutes();
-            $scope.datepicker_start = modal + ' ' + $scope.datetime;
-        };
-        $scope.closedateModal_end = function (modal, datetime) {
-            // 计算天数
-            $scope.enddatetime = datetime.getHours() + ':' + datetime.getMinutes();
-            var arr1 = $scope.datepicker_start.split('-');
-            var arr2 = modal.split('-');
-            var d1 = new Date(arr1[0], arr1[1], arr1[2]);
-            var d2 = new Date(arr2[0], arr2[1], arr2[2]);
-            $scope.day = (d2.getTime() - d1.getTime()) / (1000 * 3600 * 24) + 1;
-            if ($scope.day < 1) {
+            if (modal && datetime) {
+                $scope.datemodal_statr.hide();
+                $scope.datetime = datetime.getUTCHours() + ':' + datetime.getMinutes();
+                $scope.datepicker_st = modal;
+                $scope.datepicker_start = modal + ' ' + $scope.datetime;
+            } else {
                 $ionicPopup.alert({
                     title: '警告',
-                    template: '请假日期错误！请重新选择'
+                    template: '请完善日期时间'
                 })
-                $scope.datepicker_end = '';
-            } else {
-                $scope.datemodal_end.hide();
-                $scope.display = 'none';
-                $scope.datepicker_end = modal + ' ' + $scope.enddatetime;
             }
+        };
+        $scope.closedateModal_end = function (modal, datetime) {
+            if (modal && datetime) {
+                // 计算天数
+                $scope.enddatetime = datetime.getUTCHours() + ':' + datetime.getMinutes();
+                var arr1 = $scope.datepicker_st.split('-');
+                var arr2 = modal.split('-');
+                var d1 = new Date(arr1[0], arr1[1], arr1[2]);
+                var d2 = new Date(arr2[0], arr2[1], arr2[2]);
+                $scope.day = (d2.getTime() - d1.getTime()) / (1000 * 3600 * 24) + 1;
+                if ($scope.day < 1) {
+                    $ionicPopup.alert({
+                        title: '警告',
+                        template: '请假日期错误！请重新选择'
+                    })
+                    $scope.datepicker_end = '';
+                } else {
+                    $scope.datemodal_end.hide();
+                    $scope.display = 'none';
+                    $scope.datepicker_end = modal + ' ' + $scope.enddatetime;
+                }
+            } else {
+                $ionicPopup.alert({
+                    title: '警告',
+                    template: '请完善信息'
+                })
+            }
+
         };
     })
     //请假-我的请假控制器
@@ -1563,21 +1628,20 @@ angular.module('starter.controllers', ['pickadate'])
                         if (res.result == "success") {
                             $ionicLoading.hide();
                             $ionicPopup.alert({
-                                title:'系统提醒',
-                                template:'扫描到蓝牙,可以签到了'
+                                title: '系统提醒',
+                                template: '扫描到蓝牙,可以签到了'
                             });
                             var date = new Date();
                             //检测签到状态
 
-                                    //
+                            //
                             student_sign();
 
-                        }else
-                        {
+                        } else {
                             $ionicLoading.hide();
                             $ionicPopup.alert({
                                 title: '提示',
-                                template:  "请打开蓝牙重新打开签到"
+                                template: "请打开蓝牙重新打开签到"
                             });
                             $scope.sign_button_state = 'button-stable';
                             $scope.signout_button_state = 'button-stable';
@@ -1586,33 +1650,53 @@ angular.module('starter.controllers', ['pickadate'])
                     });
                 }//如果不支持ble，使用gps扫描
                 else if (res.result == "gps") {
-
-                    ble.scanGps("22.130975", "113.361343", function (message) {
+                    var date = new Date();
+                    $http.get(httparr + '/getpoint', {
+                        params: {
+                            date: date,
+                            StudentId: window.localStorage['_id']
+                        }
+                    }).success(function (data) {
                         //
 
-                        var res = JSON.parse(message);
-                        if (res.result == 'success') {
-                            //
+                        if (data == "没课") {
                             $ionicLoading.hide();
                             $ionicPopup.alert({
-                                title:'系统提醒',
-                                template:'你已经在对应位置,请签到'
-                            });
-                            student_sign();
-
-                            //
-                        } else {
-                            $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title: '提示',
-                                template: res.msg
+                                title: '提醒',
+                                template: '当前时间没课'
                             });
                             $scope.sign_button_state = 'button-stable';
                             $scope.signout_button_state = 'button-stable';
                             $scope.signbutton = '-1';
+                            return;
                         }
-                        //
-                    });
+                        ble.scanGps(data.Address.lat, data.Address.lng, function (message) {
+                            //
+
+                            var res = JSON.parse(message);
+                            if (res.result == 'success') {
+                                //
+                                $ionicLoading.hide();
+                                $ionicPopup.alert({
+                                    title: '系统提醒',
+                                    template: '你已经在对应位置,请签到'
+                                });
+                                student_sign();
+
+                                //
+                            } else {
+                                $ionicLoading.hide();
+                                $ionicPopup.alert({
+                                    title: '提示',
+                                    template: res.msg
+                                });
+                                $scope.sign_button_state = 'button-stable';
+                                $scope.signout_button_state = 'button-stable';
+                                $scope.signbutton = '-1';
+                            }
+                        });
+                    })
+
                 } else {
                     $ionicLoading.hide();
                     $ionicPopup.alert({
