@@ -202,7 +202,7 @@ public class Ble extends CordovaPlugin {
 			
 			PackageManager pm = cordova.getActivity().getApplicationContext().getPackageManager();
 			 if(Build.VERSION.SDK_INT >=18){
-				 PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"blue\"}");
+				 PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"ble\"}");
 					rr.setKeepCallback(true);
 					
 					_context.sendPluginResult(rr);
