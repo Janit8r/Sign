@@ -5,7 +5,7 @@ var time;
 var get_wifitime;
 var check_stuwifitime;
 
-angular.module('starter.controllers', ['pickadate'])
+angular.module('starter.controllers', ['pickadate', 'ionic-timepicker'])
     //登录页面控制器
     .controller('LoginCtrl', function ($scope, $state, $ionicPopup, $ionicLoading, $http, $timeout, $ionicModal, $cordovaDevice) {
         ////
@@ -108,6 +108,21 @@ angular.module('starter.controllers', ['pickadate'])
                                         var stuAlias = data._id.toString();
                                         //jpushService.setTagsWithAlias(stutags, stuAlias);
                                         window.localStorage['dege'] = '';
+                                        //
+                                        face.search(window.localStorage['Number'], function (msg) {
+                                            if (JSON.parse(msg).result == "fail") {
+                                                $ionicPopup.alert({
+                                                    title: '抱歉',
+                                                    template: '您的脸良辰不认得，请先前往个人中心注册'
+                                                }).then(function (res) {
+                                                    if (res) {
+                                                        $state.go('index_tab.information');
+                                                    }
+
+                                                });
+                                            }
+                                        });
+                                        //
                                         $state.go('index_tab.study');
                                     }, 2000);
 
@@ -766,8 +781,26 @@ angular.module('starter.controllers', ['pickadate'])
         };
     })
     //首页-学习页面控制器
-    .controller('StudyCtrl', function ($scope, $state, $timeout, $ionicPopup, $http) {
+    .controller('StudyCtrl', function ($scope, $state, $timeout, $ionicPlatform, $ionicPopup, $http) {
         //
+
+        $ionicPlatform.ready(function () {
+            if (window.Connection) {
+                if (navigator.connection.type == Connection.NONE) {
+                    $ionicPopup.confirm({
+                        title: "网络无法连接",
+                        content: "请确保你能够网络畅通再打开本程序"
+                    })
+                        .then(function (result) {
+                            ble.exit();
+
+                        });
+                }
+            }
+
+        });
+
+
         $scope.screenheight = window.innerHeight - 90;
         $scope.jiugongeheight = $scope.screenheight / 3;
         //alert($scope.jiugongeheight);
@@ -799,7 +832,7 @@ angular.module('starter.controllers', ['pickadate'])
     })
 
     //首页-个人信息页面控制器
-    .controller('InformationCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $cordovaImagePicker, $http, $cordovaFileTransfer, $ionicLoading, $timeout) {
+    .controller('InformationCtrl', function ($scope, $state, $ionicModal, $ionicPopup, $ionicHistory, $cordovaImagePicker, $http, $cordovaFileTransfer, $ionicLoading, $timeout) {
         //$scope.$on('$ionicView.beforeEnter', function (viewInfo, state) {
         $scope.new = {Infors: '', New_password: '', Sure_password: ''};
 
@@ -810,9 +843,12 @@ angular.module('starter.controllers', ['pickadate'])
             params: {Number: window.localStorage['Number']}
         })
             .success(function (data) {
+
+                $ionicLoading.hide();
                 $scope.student = data;
             })
             .error(function (err) {
+
                 var timeout = $timeout(function () {
                     $ionicPopup.alert({
                         title: '抱歉~',
@@ -1151,6 +1187,7 @@ angular.module('starter.controllers', ['pickadate'])
             });
             confirmPopup.then(function (res) {
                 if (res) {
+
                     window.localStorage['Number'] = '';
                     window.localStorage['Classes'] = '';
                     window.localStorage['Professions'] = '';
@@ -1252,7 +1289,7 @@ angular.module('starter.controllers', ['pickadate'])
         }
     })
 //请假-提交申请页面控制器
-    .controller('NewleaveCtrl', function ($scope, $cordovaDatePicker, $filter, $state, $ionicModal, $ionicPopup, $http) {
+    .controller('NewleaveCtrl', function ($scope, $cordovaDatePicker, $ionicLoading, $filter, $state, $ionicModal, $ionicPopup, $http) {
         //
         $scope.studentname = window.localStorage['Name'];
         $scope.leave = {why: ''};
@@ -1267,30 +1304,38 @@ angular.module('starter.controllers', ['pickadate'])
         };
         //提交按钮
         $scope.submit = function () {
+            if ($scope.datepicker_start == '' || $scope.datepicker_end == '' || $scope.leave.why == '') {
+                $ionicPopup.alert({
+                    title: '提示',
+                    template: '请完善请假信息'
+                })
+            } else {
+                $ionicLoading.show();
+                $http.post(httparr + '/vacation', {
+                    Student: window.localStorage['_id'],
+                    ClassesId: window.localStorage['Classes'],
+                    BeginDate: $scope.datepicker_start,
+                    EndDate: $scope.datepicker_end,
+                    Reason: $scope.leave.why,
+                    VacationTime: new Date()
+                })
+                    .success(function (data) {
+                        //
+                        $ionicLoading.hide();
+                        $ionicPopup.alert({
+                            title: '提示',
+                            template: '提交申请成功'
+                        }).then(function () {
+                            $scope.datepicker_start = '';
+                            $scope.datepicker_end = '';
+                            $scope.leave.why = '';
+                        })
+                    }).error(function (err) {
+                        //
+                    });
 
-            $http.post(httparr + '/vacation', {
-                Student: window.localStorage['_id'],
-                ClassesId: window.localStorage['Classes'],
-                BeginDate: $scope.datepicker_start,
-                EndDate: $scope.datepicker_end,
-                Reason: $scope.leave.why,
-                VacationTime: new Date()
-            })
-                .success(function (data) {
-                    //
-                }).error(function (err) {
-                    //
-                }).then(function () {
-                    //
-                });
-            $ionicPopup.alert({
-                title: '提示',
-                template: '提交申请成功'
-            }).then(function () {
-                $scope.datepicker_start = '';
-                $scope.datepicker_end = '';
-                $scope.leave.why = '';
-            })
+            }
+
         };
         //显示与隐藏
         $scope.display = 'none';
@@ -1301,10 +1346,51 @@ angular.module('starter.controllers', ['pickadate'])
                 $scope.display = 'none'
             }
         }
+        $scope.beginTime = "选取开始时点"
+        $scope.beginTimePickerObject = {
+            inputEpochTime: ((new Date()).getHours() * 60 * 60 + (new Date()).getMinutes() * 60),  //Optional
+            step: 10,  //Optional
+            format: 24,  //Optional
+            titleLabel: '24-hour Format',  //Optional
+            closeLabel: '取消',  //Optional
+            setLabel: '选择',  //Optional
+            setButtonType: 'button-balanced',  //Optional
+            closeButtonType: 'button-positive',  //Optional
+            callback: function (val) {    //Mandatory
+                //
+                if (val != null) {
+                    $scope.beginTimePickerObject.inputEpochTime = val;
+                    $scope.beginSelectedTime = new Date(val * 1000);
+                    $scope.beginTime = $scope.beginSelectedTime.getUTCHours() + ':' + $scope.beginSelectedTime.getMinutes();
+                }
+                //
+            }
+        };
+        $scope.endTime = "选取结束时点"
+        $scope.endTimePickerObject = {
+            inputEpochTime: ((new Date()).getHours() * 60 * 60 + (new Date()).getMinutes() * 60),  //Optional
+            step: 10,  //Optional
+            format: 24,  //Optional
+            titleLabel: '24-hour Format',  //Optional
+            closeLabel: '取消',  //Optional
+            setLabel: '选择',  //Optional
+            setButtonType: 'button-balanced',  //Optional
+            closeButtonType: 'button-positive',  //Optional
+            callback: function (val) {    //Mandatory
+                //
+                if (val != null) {
+                    $scope.endTimePickerObject.inputEpochTime = val;
+                    $scope.endSelectedTime = new Date(val * 1000);
+                    $scope.endTime = $scope.endSelectedTime.getUTCHours() + ':' + $scope.endSelectedTime.getMinutes();
+                }
+                //
+            }
+        };
         //开始日期选择器
         $ionicModal.fromTemplateUrl('templates/datemodal-start.html',
             function (modal) {
                 $scope.datemodal_statr = modal;
+
             },
             {
                 // Use our scope for the scope of the modal to keep it simple
@@ -1347,29 +1433,45 @@ angular.module('starter.controllers', ['pickadate'])
         }
         //关闭日期选择
         $scope.closedateModal = function (modal, datetime) {
-            $scope.datemodal_statr.hide();
-            $scope.datetime = datetime.getHours() + ':' + datetime.getMinutes();
-            $scope.datepicker_start = modal + ' ' + $scope.datetime;
-        };
-        $scope.closedateModal_end = function (modal, datetime) {
-            // 计算天数
-            $scope.enddatetime = datetime.getHours() + ':' + datetime.getMinutes();
-            var arr1 = $scope.datepicker_start.split('-');
-            var arr2 = modal.split('-');
-            var d1 = new Date(arr1[0], arr1[1], arr1[2]);
-            var d2 = new Date(arr2[0], arr2[1], arr2[2]);
-            $scope.day = (d2.getTime() - d1.getTime()) / (1000 * 3600 * 24) + 1;
-            if ($scope.day < 1) {
+            if (modal && datetime) {
+                $scope.datemodal_statr.hide();
+                $scope.datetime = datetime.getUTCHours() + ':' + datetime.getMinutes();
+                $scope.datepicker_st = modal;
+                $scope.datepicker_start = modal + ' ' + $scope.datetime;
+            } else {
                 $ionicPopup.alert({
                     title: '警告',
-                    template: '请假日期错误！请重新选择'
+                    template: '请完善日期时间'
                 })
-                $scope.datepicker_end = '';
-            } else {
-                $scope.datemodal_end.hide();
-                $scope.display = 'none';
-                $scope.datepicker_end = modal + ' ' + $scope.enddatetime;
             }
+        };
+        $scope.closedateModal_end = function (modal, datetime) {
+            if (modal && datetime) {
+                // 计算天数
+                $scope.enddatetime = datetime.getUTCHours() + ':' + datetime.getMinutes();
+                var arr1 = $scope.datepicker_st.split('-');
+                var arr2 = modal.split('-');
+                var d1 = new Date(arr1[0], arr1[1], arr1[2]);
+                var d2 = new Date(arr2[0], arr2[1], arr2[2]);
+                $scope.day = (d2.getTime() - d1.getTime()) / (1000 * 3600 * 24) + 1;
+                if ($scope.day < 1) {
+                    $ionicPopup.alert({
+                        title: '警告',
+                        template: '请假日期错误！请重新选择'
+                    })
+                    $scope.datepicker_end = '';
+                } else {
+                    $scope.datemodal_end.hide();
+                    $scope.display = 'none';
+                    $scope.datepicker_end = modal + ' ' + $scope.enddatetime;
+                }
+            } else {
+                $ionicPopup.alert({
+                    title: '警告',
+                    template: '请完善信息'
+                })
+            }
+
         };
     })
     //请假-我的请假控制器
@@ -1548,389 +1650,238 @@ angular.module('starter.controllers', ['pickadate'])
             $ionicLoading.show({
                 templateUrl: 'templates/loadingPage.html'
             });
-            ble.supportBle(function (message) {
 
-                alert(message);
+
+            ble.scanBlue("E-Beacon_73378A", function (message) {
+
                 var res = JSON.parse(message);
+                if (res.result == "success") {
+                    $ionicLoading.hide();
 
-                if (res.result == "ble") {//如果支持ble
+                    student_sign();
 
-                    ble.scanBlue("E-Beacon_73378A", function (message) {
-
-
-                        var res = JSON.parse(message);
-
-                        if (res.result == "success") {
-                            $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title:'系统提醒',
-                                template:'扫描到蓝牙,可以签到了'
-                            });
-                            var date = new Date();
-                            //检测签到状态
-
-                                    //
-                            student_sign();
-
-                        }else
-                        {
-                            $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title: '提示',
-                                template:  "请打开蓝牙重新打开签到"
-                            });
-                            $scope.sign_button_state = 'button-stable';
-                            $scope.signout_button_state = 'button-stable';
-                            $scope.signbutton = '-1';
-                        }
-                    });
-                }//如果不支持ble，使用gps扫描
-                else if (res.result == "gps") {
-
-                    ble.scanGps("22.130975", "113.361343", function (message) {
-                        //
-                        alert(message);
-                        var res = JSON.parse(message);
-                        if (res.result == 'success') {
-                            //
-                            $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title:'系统提醒',
-                                template:'你已经在对应位置,请签到'
-                            });
-                            student_sign();
-
-                            //
-                        } else {
-                            $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title: '提示',
-                                template: res.msg
-                            });
-                            $scope.sign_button_state = 'button-stable';
-                            $scope.signout_button_state = 'button-stable';
-                            $scope.signbutton = '-1';
-                        }
-                        //
-                    });
                 } else {
                     $ionicLoading.hide();
                     $ionicPopup.alert({
-                        title: '系统提醒',
-                        template: '未扫描到蓝牙，请你确定你的蓝牙已经打开'
+                        title: '提示',
+                        template: "未扫描到蓝牙,请确保你在指定的位置签到"
                     });
                     $scope.sign_button_state = 'button-stable';
                     $scope.signout_button_state = 'button-stable';
                     $scope.signbutton = '-1';
                 }
-
-            })
-            //点击签到按钮
-            $scope.sign = function () {
-                $ionicLoading.show({
-                    templateUrl: 'templates/loadingPage.html'
-                });
-
-                var success = function (msg) {
-                    $ionicLoading.hide();
-                    //var data = msg;
-                    //alert(JSON.parse(data));
-                    if (JSON.parse(msg).result == 'success') {
-                        //
-                        var success = function (msg) {
-                            $ionicLoading.hide();
-                            if (JSON.parse(msg).result == 'success') {
-                                $ionicLoading.show({
-                                    templateUrl: 'templates/loadingPage.html'
-                                });
-                                //定义一个获取时间的方法
-                                var date = new Date();
-                                $http.post(httparr + '/SignIn', {
-                                    date: date,
-                                    StudentId: window.localStorage['_id']
-                                })
-                                    .success(function (data) {
-                                        //alert(data);
-                                        if (data == '你已经签到了') {
-                                            $ionicPopup.alert({
-                                                title: '系统提醒',
-                                                template: "你已经签到了",
-                                                okText: '确定'
-                                            }).then(function (res) {
-                                                if (res) {
-                                                    $scope.signbutton = '1';
-                                                    $scope.signout_button_state = 'button-positive';
-                                                }
-
-                                            })
-                                        }
-                                        else if (data == '现在不是签到时间') {
-                                            $ionicPopup.alert({
-                                                title: '系统提醒',
-                                                template: "当前不是签到时间",
-                                                okText: '确定'
-                                            })
-                                        }
-                                        else {
-                                            $ionicPopup.alert({
-                                                title: '提示',
-                                                template: data
-                                            }).then(function () {
-                                                $scope.signbutton = '1';
-                                                $scope.sign_button_state = 'button-stable';
-                                                $scope.signout_button_state = 'button-positive';
-                                                $scope.sign = function () {
-                                                }
-                                            })
-                                        }
-                                    })
-                                    .error(function () {
-                                    })
-                                    .then(function () {
-                                        $ionicLoading.hide();
-                                    })
-
-                            } else {
-                                $ionicPopup.alert({
-                                    title: '提示',
-                                    template: JSON.parse(msg).result
-                                });
-                            }
-                            $scope.currentValue = msg;
-                            $scope.$apply();
-                        };
-
-                        var failure = function (error) {
-                            alert(error);
-                        };
-
-                        face.verify(window.localStorage['Number'], success, failure);
-                        //
-                    } else if (JSON.parse(msg).result == 'fail') {
-                        $ionicPopup.alert({
-                            title: '抱歉',
-                            template: '您的脸良辰不认得，请先前往个人中心注册'
-                        }).then(function (res) {
-                            if (res) {
-                                $state.go('index_tab.information');
-                            }
-                        });
-                    }
-                    $scope.currentValue = msg;
-                    $scope.$apply();
-                };
-
-                var failure = function (error) {
-                    alert(error);
-                };
-
-                face.search(window.localStorage['Number'], success, failure);
-                //
-            }
-            //
-            //点击签退按钮
-            $scope.signout = function () {
-                $ionicPopup.confirm({
-                    title: '系统提醒',
-                    template: '你确定要现在签退吗？',
-                    okText: '确定',
-                    cancelText: '取消'
-                }).then(function (res) {
-                    if (res) {
-                        //确定
-                        $ionicLoading.show({
-                            templateUrl: 'templates/loadingPage.html'
-                        });
-                        var date = new Date();
-                        $http.get(httparr + '/CheackIfSign', {
-                            params: {
-                                date: date,
-                                StudentId: window.localStorage['_id']
-                            }
-                        })
-                            .success(function (data) {
-                                $ionicLoading.hide();
-                                if (data == '没课') {
-                                    $scope.signout = function () {
-                                        $ionicPopup.alert({
-                                            title: '系统提醒',
-                                            template: '现在不需要签退'
-                                        })
-                                    }
-                                } else {
-                                    var success = function (msg) {
-                                        $ionicLoading.hide();
-                                        //var data = msg;
-                                        //alert(JSON.parse(data));
-                                        if (JSON.parse(msg).result == 'success') {
-                                            //
-                                            var success = function (msg) {
-                                                $ionicLoading.hide();
-                                                if (JSON.parse(msg).result == 'success') {
-                                                    $ionicLoading.show({
-                                                        templateUrl: 'templates/loadingPage.html'
-                                                    });
-                                                    //定义一个获取时间的方法
-                                                    var date = new Date();
-                                                    $http.post(httparr + '/SignOut', {
-                                                        date: date,
-                                                        StudentId: window.localStorage['_id']
-                                                    })
-                                                        .success(function (data) {
-                                                            $ionicPopup.alert({
-                                                                title: '系统提醒',
-                                                                template: data
-                                                            })
-                                                            if (data == '签退成功') {
-                                                                $scope.signbutton = '0';
-                                                            }
-                                                        })
-                                                        .error(function () {
-                                                        })
-                                                        .then(function () {
-                                                            $ionicLoading.hide();
-                                                            $scope.signbutton = -1;
-                                                        })
-
-                                                } else {
-                                                    $ionicPopup.alert({
-                                                        title: '提示',
-                                                        template: JSON.parse(msg).result
-                                                    });
-                                                }
-                                                $scope.currentValue = msg;
-                                                $scope.$apply();
-                                            };
-
-                                            var failure = function (error) {
-                                                alert(error);
-                                            };
-
-                                            face.verify(window.localStorage['Number'], success, failure);
-                                            //
-                                        } else if (JSON.parse(msg).result == 'fail') {
-                                            $ionicPopup.alert({
-                                                title: '抱歉',
-                                                template: '您的脸良辰不认得，请先前往个人中心注册'
-                                            }).then(function (res) {
-                                                if (res) {
-                                                    $state.go('index_tab.information');
-                                                }
-                                            });
-                                        }
-                                        $scope.currentValue = msg;
-                                        $scope.$apply();
-                                    };
-
-                                    var failure = function (error) {
-                                        alert(error);
-                                    };
-
-                                    face.search(window.localStorage['Number'], success, failure);
-                                    //
-                                }
-                            })
-                    } else {
-                        //取消
-                    }
-                })
-            }
+            });
         })
-    })
-
-
-    //班委tabs 班级成员签到
-    .controller('MembersCtrl', function ($scope, $state, $ionicPopup, $http, $ionicLoading) {
-        $scope.$on('$ionicView.beforeEnter', function (viewInfo, state) {
+        //点击签到按钮
+        $scope.sign = function () {
+            //
             $ionicLoading.show({
                 templateUrl: 'templates/loadingPage.html'
             });
-            $scope.return = function () {
-                $state.go('index_tab.study');
-            }
-
-            $scope.array = [];
-
-            //获取班级学生
-            $http.get(httparr + '/getStudents', {
-                params: {classes: window.localStorage['Classes']}
+            //定义一个获取时间的方法
+            var date = new Date();
+            $http.post(httparr + '/SignIn', {
+                date: date,
+                StudentId: window.localStorage['_id']
+            }).success(function (data) {
+                //alert(data);
+                if (data == '你已经签到了') {
+                    $ionicPopup.alert({
+                        title: '系统提醒',
+                        template: "你已经签到了",
+                        okText: '确定'
+                    }).then(function (res) {
+                        if (res) {
+                            $scope.signbutton = '1';
+                            $scope.signout_button_state = 'button-positive';
+                        }
+                    })
+                }
+                else if (data == '现在不是签到时间') {
+                    $ionicPopup.alert({
+                        title: '系统提醒',
+                        template: "当前不是签到时间",
+                        okText: '确定'
+                    })
+                }
+                else {
+                    $ionicPopup.alert({
+                        title: '提示',
+                        template: data
+                    }).then(function () {
+                        $scope.signbutton = '1';
+                        $scope.sign_button_state = 'button-stable';
+                        $scope.signout_button_state = 'button-positive';
+                        $scope.sign = function () {
+                        }
+                    })
+                }
             })
-                .success(function (data) {
-                    for (i = 0; i < data.length; i++) {
-                        $scope.array.push(data[i]);
-                    }
-                    $scope.menbers = $scope.array;
-
-                    //获取当前需要签到的课程
-                    var nowdate = new Date();
-                    $http.get(httparr + '/getSubject', {
-
+        }
+        //
+        //点击签退按钮
+        $scope.signout = function () {
+            $ionicPopup.confirm({
+                title: '系统提醒',
+                template: '你确定要现在签退吗？',
+                okText: '确定',
+                cancelText: '取消'
+            }).then(function (res) {
+                if (res) {
+                    //确定
+                    $ionicLoading.show({
+                        templateUrl: 'templates/loadingPage.html'
+                    });
+                    var date = new Date();
+                    $http.get(httparr + '/CheackIfSign', {
                         params: {
-                            date: nowdate,
+                            date: date,
                             StudentId: window.localStorage['_id']
                         }
                     })
-                        .success(function (dd) {
-                            if (data != null) {
-                                $scope.SubjectName = dd;
-                            }
-                            else {
-                                $scope.SubjectName = '该时间段为休息时间';
-                            }
-                        })
-                        .error(function () {
-                        })
-                        .then(function () {
-                        })
-
-                    $scope.Sign = function (StudentId) {
-                        for (k = 0; k < $scope.array.length; k++) {
-                            if ($scope.array[k]._id == window.localStorage['_id']) {
-                                var CheckSigin = $scope.array[k].IsSignIn;
-                            }
-                        }
-                        if (CheckSigin == 1) {
-                            $ionicPopup.confirm({
-                                title: '警告',
-                                template: '是否代替其签到？一旦确定不可修改！',
-                                okText: '确定',
-                                cancelText: '取消'
-                            }).then(function (res) {
-                                if (res) {
+                        .success(function (data) {
+                            $ionicLoading.hide();
+                            if (data == '没课') {
+                                $scope.signout = function () {
+                                    $ionicPopup.alert({
+                                        title: '系统提醒',
+                                        template: '现在不需要签退'
+                                    })
+                                }
+                            } else {
+                                $ionicLoading.hide();
+                                if (JSON.parse(msg).result == 'success') {
+                                    $ionicLoading.show({
+                                        templateUrl: 'templates/loadingPage.html'
+                                    });
+                                    //定义一个获取时间的方法
                                     var date = new Date();
-
-                                    $http.post(httparr + '/help_sign', {
-                                        StudentId: StudentId,
-                                        date: date
+                                    $http.post(httparr + '/SignOut', {
+                                        date: date,
+                                        StudentId: window.localStorage['_id']
                                     })
                                         .success(function (data) {
-                                            for (j = 0; j < $scope.array.length; j++) {
-                                                if ($scope.array[j]._id == data._id) {
-                                                    $scope.array[j].IsSignIn = '1';
-                                                }
+                                            $ionicPopup.alert({
+                                                title: '系统提醒',
+                                                template: data
+                                            })
+                                            if (data == '签退成功') {
+                                                $scope.signbutton = '0';
                                             }
-                                        })
-                                        .then(function () {
                                         })
                                         .error(function () {
                                         })
-                                } else {
+                                        .then(function () {
+                                            $ionicLoading.hide();
+                                            $scope.signbutton = -1;
+                                        })
+
                                 }
-                            })
-                        }
-                        else {
-                            $ionicPopup.alert({
-                                title: '警告',
-                                template: '请您先自行签到'
-                            })
-                        }
+                                ;
+
+                            }
+                        });
+                }
+            });
+
+
+        }
+    })
+
+
+//班委tabs 班级成员签到
+.
+controller('MembersCtrl', function ($scope, $state, $ionicPopup, $http, $ionicLoading) {
+    $scope.$on('$ionicView.beforeEnter', function (viewInfo, state) {
+        $ionicLoading.show({
+            templateUrl: 'templates/loadingPage.html'
+        });
+        $scope.return = function () {
+            $state.go('index_tab.study');
+        }
+
+        $scope.array = [];
+
+        //获取班级学生
+        $http.get(httparr + '/getStudents', {
+            params: {classes: window.localStorage['Classes']}
+        })
+            .success(function (data) {
+                for (i = 0; i < data.length; i++) {
+                    $scope.array.push(data[i]);
+                }
+                $scope.menbers = $scope.array;
+
+                //获取当前需要签到的课程
+                var nowdate = new Date();
+                $http.get(httparr + '/getSubject', {
+
+                    params: {
+                        date: nowdate,
+                        StudentId: window.localStorage['_id']
                     }
                 })
-                .then(function () {
-                    $ionicLoading.hide();
-                })
-        })
+                    .success(function (dd) {
+                        if (data != null) {
+                            $scope.SubjectName = dd;
+                        }
+                        else {
+                            $scope.SubjectName = '该时间段为休息时间';
+                        }
+                    })
+                    .error(function () {
+                    })
+                    .then(function () {
+                    })
+
+                $scope.Sign = function (StudentId) {
+                    for (k = 0; k < $scope.array.length; k++) {
+                        if ($scope.array[k]._id == window.localStorage['_id']) {
+                            var CheckSigin = $scope.array[k].IsSignIn;
+                        }
+                    }
+                    if (CheckSigin == 1) {
+                        $ionicPopup.confirm({
+                            title: '警告',
+                            template: '是否代替其签到？一旦确定不可修改！',
+                            okText: '确定',
+                            cancelText: '取消'
+                        }).then(function (res) {
+                            if (res) {
+                                var date = new Date();
+
+                                $http.post(httparr + '/help_sign', {
+                                    StudentId: StudentId,
+                                    date: date
+                                })
+                                    .success(function (data) {
+                                        for (j = 0; j < $scope.array.length; j++) {
+                                            if ($scope.array[j]._id == data._id) {
+                                                $scope.array[j].IsSignIn = '1';
+                                            }
+                                        }
+                                    })
+                                    .then(function () {
+                                    })
+                                    .error(function () {
+                                    })
+                            } else {
+                            }
+                        })
+                    }
+                    else {
+                        $ionicPopup.alert({
+                            title: '警告',
+                            template: '请您先自行签到'
+                        })
+                    }
+                }
+            })
+            .then(function () {
+                $ionicLoading.hide();
+            })
     })
+})
 
 
     //我的班级成员页面控制器

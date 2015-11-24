@@ -34,10 +34,10 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.mybofeng.sign"
         },
-        "cordova-plugin-network-information": {
+        "com.synconset.imagepicker": {
             "PACKAGE_NAME": "com.mybofeng.sign"
         },
-        "com.synconset.imagepicker": {
+        "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.mybofeng.sign"
         }
     },

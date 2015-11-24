@@ -10,31 +10,31 @@
 	<string>SignAssist</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>D6DBCD6A6CF712D429CB1BB9A101E280FB20D010</key>
-		<string>https://github.com/Linhehe/SchoolClienAndroid.git</string>
+		<key>378284933924962FAE3D8294600C147BD59F9C48</key>
+		<string>https://github.com/huyugui1979/Sign.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>platforms/ios/SignAssist.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>D6DBCD6A6CF712D429CB1BB9A101E280FB20D010</key>
+		<key>378284933924962FAE3D8294600C147BD59F9C48</key>
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/Linhehe/SchoolClienAndroid.git</string>
+	<string>https://github.com/huyugui1979/Sign.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>D6DBCD6A6CF712D429CB1BB9A101E280FB20D010</string>
+	<string>378284933924962FAE3D8294600C147BD59F9C48</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>D6DBCD6A6CF712D429CB1BB9A101E280FB20D010</string>
+			<string>378284933924962FAE3D8294600C147BD59F9C48</string>
 			<key>IDESourceControlWCCName</key>
-			<string>SchoolClienAndroid1</string>
+			<string>Sign</string>
 		</dict>
 	</array>
 </dict>

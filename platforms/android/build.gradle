@@ -25,7 +25,7 @@ buildscript {
     repositories {
         mavenCentral()
     }
-
+	
     // Switch the Android Gradle plugin version requirement depending on the
     // installed version of Gradle. This dependency is documented at
     // http://tools.android.com/tech-docs/new-build-system/version-compatibility
@@ -158,6 +158,10 @@ task cdvPrintProps << {
 }
 
 android {
+lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

@@ -22,16 +22,33 @@ package com.mybofeng.sign;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+
 public class MainActivity extends CordovaActivity
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        initImageLoader();
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
     }
 
-
+    private void initImageLoader() {
+        DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .displayer(new FadeInBitmapDisplayer(200))
+                .build();
+        ImageLoaderConfiguration imageLoaderConfiguration = new ImageLoaderConfiguration.Builder(
+                this)
+                .defaultDisplayImageOptions(displayImageOptions)
+                .build();
+        ImageLoader.getInstance().init(imageLoaderConfiguration);
+    }
   
 }

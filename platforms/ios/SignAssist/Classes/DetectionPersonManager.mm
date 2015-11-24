@@ -134,13 +134,13 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:data name:stringname fileName:string mimeType:@"image/jpeg"];
     }
 }
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       NSDictionary *dic = responseObject;
                       
                       if (finsh) {
                           finsh(dic);
                       }
-                  }
+    }
                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                       NSLog(@"error:%@", error);
                       
@@ -163,13 +163,13 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 }
 
 - (void)registerPerson:(UIImage *)personImage username:(NSString *)name finsh:(VoidBlock_id)finsh{
-    NSData *imageData = UIImageJPEGRepresentation(personImage, 0.3);
+    NSData *imageData = UIImageJPEGRepresentation(personImage,0.8);
     NSString *hostapi = [NSString stringWithFormat:@"%@/person/create?api_key=%@&api_secret=%@&person_name=%@",self.hostAPI , _api_key, _api_secret, name];
     NSString *unicodeStr =  [hostapi stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     [self.netManager POST:unicodeStr
                parameters:nil
 constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-    [formData appendPartWithFileData:imageData name:@"img" fileName:@"" mimeType:@"image/jpeg"];
+    [formData appendPartWithFileData:imageData name:@"img" fileName:@"file1" mimeType:@"image/jpeg"];
 }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       if (finsh) {
@@ -178,6 +178,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                   }
                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                       if (finsh) {
+                          NSDictionary *weatherDic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableLeaves error:&error];
+                          
                           finsh(error);
                       }
                   }];
@@ -195,6 +197,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                   }
                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                       if (finsh) {
+                         
+                              NSDictionary *weatherDic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableLeaves error:&error];
                           finsh(error);
                       }
                   }];

@@ -2,6 +2,8 @@ package com.faceplusplus.hetaolivenessdetection;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
@@ -11,6 +13,7 @@ import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.view.animation.Animation;
@@ -457,7 +460,12 @@ public class MainActivity extends Activity implements PreviewCallback,
 		
 	    intent.putExtra("result",resultString);
 		setResult(RESULT_OK, intent);
+		SharedPreferences preferences = getSharedPreferences("verify", MODE_PRIVATE);   
+		 Editor editor = preferences.edit();   
 		
+		 editor.putString("result",resultString);   
+		 editor.commit(); 
+		Log.d("fininsh","finished");
 //		if (name != null) {
 //			ResultActivity.startActivity(MainActivity.this,
 //					jsonObject.toString());

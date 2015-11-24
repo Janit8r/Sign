@@ -5,10 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
-    .run(function ($ionicPlatform, $ionicPopup, $state) {
-//
+    .run(function ($ionicPlatform,$ionicHistory, $ionicPopup, $state) {
+
         //主页面显示退出提示框
         $ionicPlatform.registerBackButtonAction(function (e) {
 
@@ -36,7 +36,6 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
         }, 101);
 
 
-
         $ionicPlatform.ready(function () {
             //cordova.plugins.locationManager.enableBluetooth();
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -45,14 +44,50 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
 
 
             }
-            if(window.Connection) {
-                if(navigator.connection.type == Connection.NONE) {
+
+            if(device.platform == "Android" )
+            {
+                ble.getlevel(function(msg){
+
+                    if(JSON.parse(msg).level<18)
+                    {
+                        $ionicPopup.confirm({
+                            title: "错误",
+                            content: "系统暂时不支持android4.3以下系统,请借别的同学的手机进行签到吧"
+                        })
+                            .then(function (result) {
+                                ble.exit();
+                            });
+                    }
+
+                })
+            }
+            if(device.platform =="ios" && (device.model == "iPhone3,1"
+                ||device.model == "iPhone3,2"
+                || device.model == "iPhone3,3"
+                || device.model == "iPhone4,1"
+                || device.model == "iPhone4,2"
+                || device.model == "iPhone4,3")
+            )
+            {
+                $ionicPopup.confirm({
+                    title: "错误",
+                    content: "系统暂时不支持iphone5以下手机,请借别的同学的手机进行签到吧"
+                })
+                    .then(function (result) {
+                        ble.exit();
+
+                    });
+            }
+
+            if (window.Connection) {
+                if (navigator.connection.type == Connection.NONE) {
                     $ionicPopup.confirm({
-                        title: "网络无法连接",
-                        content: "请确保你能够网络畅通再打开本程序"
+                        title: "错误",
+                        content: "网络无法连接,请确保你能够网络畅通再打开本程序"
                     })
-                        .then(function(result) {
-                           ble.exit();
+                        .then(function (result) {
+                            ble.exit();
 
                         });
                 }
@@ -62,7 +97,7 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
                 StatusBar.styleLightContent();
             }
             //var setTagsWithAliasCallback=function(event){
-                //window.alert('result code:'+event.resultCode+' tags:'+event.tags+' alias:'+event.alias);
+            //window.alert('result code:'+event.resultCode+' tags:'+event.tags+' alias:'+event.alias);
             //}\
 
             //安卓设备下的消息打开
@@ -71,16 +106,16 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
                     var hh = JSON.parse(data);
                     //window.alert(hh.alert);
                     console.log(hh.alert);
-                    if(hh.alert == '您的请假审核有结果了'){
+                    if (hh.alert == '您的请假审核有结果了') {
                         if (window.localStorage['Name']) {
                             $state.go('leave_tab.myleave');
-                        }else {
+                        } else {
                             $ionicPopup.alert({
                                 template: '请先登录账号！'
                             })
                             $state.go('login');
                         }
-                    }else if(hh.alert == '有新的请假申请'){
+                    } else if (hh.alert == '有新的请假申请') {
                         if (window.localStorage['TeacherName']) {
                             $state.go('teacher_leavereview');
                         } else {
@@ -89,7 +124,7 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
                             })
                             $state.go('login');
                         }
-                    }else{
+                    } else {
                         if (window.localStorage['Name']) {
                             window.localStorage['dege'] = '1';
                             $state.go('students_tabs.study');
@@ -156,11 +191,11 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
     })
 
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
-        if(window.localStorage['Stu_Purview']){
+        if (window.localStorage['Stu_Purview']) {
             var Page_address = '/index_tab/study'
-        }else if(window.localStorage['tea_Purview']){
+        } else if (window.localStorage['tea_Purview']) {
             var Page_address = '/teachers_tab/index'
-        }else{
+        } else {
             var Page_address = '/login'
         }
 
@@ -193,10 +228,9 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
             //注册界面
 
 
-
             //系统版本4.4以下学生TABS
-            .state('index_tab',{
-                url:'/index_tab',
+            .state('index_tab', {
+                url: '/index_tab',
                 abstract: true,
                 templateUrl: 'templates/index-tabs.html'
             })
@@ -211,7 +245,7 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
                 }
             }).state('index_tab.study', {
                 url: '/study',
-                cache: false,
+                cache: true,
                 views: {
                     'index_tab-study': {
                         templateUrl: 'templates/index-study.html',
@@ -259,9 +293,9 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
                 url: '/student_getpoint',
                 views: {
                     'index_tab-study': {
-                    templateUrl: 'templates/student_getpoint.html',
-                    controller: 'student_getpointCtrl'
-                }
+                        templateUrl: 'templates/student_getpoint.html',
+                        controller: 'student_getpointCtrl'
+                    }
                 }
             })
             //班委签到tabs
@@ -321,8 +355,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
                 controller: 'MyTeachersCtrl'
             })
             //系统版本4.4以下教师TABS
-            .state('teachers_tab',{
-                url:'/teachers_tab',
+            .state('teachers_tab', {
+                url: '/teachers_tab',
                 abstract: true,
                 templateUrl: 'templates/teacher_tabs.html'
             })
@@ -401,16 +435,16 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
                 }
             })
             //老师班级页面的学院列表
-            .state('teacher_college',{
-                url:'/teacher_college',
-                templateUrl:'templates/teacher_class_college.html',
-                controller:'teacher_collegeCtrl'
+            .state('teacher_college', {
+                url: '/teacher_college',
+                templateUrl: 'templates/teacher_class_college.html',
+                controller: 'teacher_collegeCtrl'
             })
             //老师班级页面的专业列表
-            .state('teacher_profession',{
-                url:'/teacher_college/:ColId',
-                templateUrl:'templates/teacher_class_profession.html',
-                controller:'teacher_professionCtrl'
+            .state('teacher_profession', {
+                url: '/teacher_college/:ColId',
+                templateUrl: 'templates/teacher_class_profession.html',
+                controller: 'teacher_professionCtrl'
             })
             //    老师页面的班级列表
             .state('teacher_class', {
@@ -458,59 +492,56 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova'])
 
             //教师权限在辅导员以上时候的考勤页面
             //考勤页面-学院列表
-            .state('teacher_attendance_college',{
-                url:'/teacher_attendance_college',
-                templateUrl:'templates/teacher-attendance-college.html',
-                controller:'AttCollegeCtrl'
+            .state('teacher_attendance_college', {
+                url: '/teacher_attendance_college',
+                templateUrl: 'templates/teacher-attendance-college.html',
+                controller: 'AttCollegeCtrl'
             })
             //考勤页面-专业列表
-            .state('teacher_attendance_profession',{
-                url:'/teacher_attendance_college/:ColId',
-                templateUrl:'templates/teacher-attendance-profession.html',
-                controller:'AttProfessionCtrl'
+            .state('teacher_attendance_profession', {
+                url: '/teacher_attendance_college/:ColId',
+                templateUrl: 'templates/teacher-attendance-profession.html',
+                controller: 'AttProfessionCtrl'
             })
             //考勤页面-班级列表
-            .state('teacher_attendance_class',{
-                url:'/teacher_attendance_college/:ColId/:ProId',
-                templateUrl:'templates/teacher-attendance-class.html',
-                controller:'AttClassCtrl'
+            .state('teacher_attendance_class', {
+                url: '/teacher_attendance_college/:ColId/:ProId',
+                templateUrl: 'templates/teacher-attendance-class.html',
+                controller: 'AttClassCtrl'
             })
             //考勤页面-班级考勤情况
-            .state('teacher_attendance_personal',{
-                url:'/teacher_attendance_college/:ColId/:ProId/:ClaId',
-                templateUrl:'templates/teacher-attendance-personal.html',
-                controller:'AttPersonalCtrl'
+            .state('teacher_attendance_personal', {
+                url: '/teacher_attendance_college/:ColId/:ProId/:ClaId',
+                templateUrl: 'templates/teacher-attendance-personal.html',
+                controller: 'AttPersonalCtrl'
             })
             //考勤页面-班级成员个人旷课详情
-            .state('teacher_attendance_personal_details',{
+            .state('teacher_attendance_personal_details', {
                 url: '/teacher_attendance_college/:ColId/:ProId/:ClaId/:PreId',
                 templateUrl: 'templates/teacher-attendance-personal-details.html',
                 controller: 'AttDetailsCtrl'
             })
 
 
-
             //教师权限为3时的考勤页面
             //考勤情况
-            .state('teacher_attendance',{
-                url:'/teacher_attendance',
-                templateUrl:'templates/teacher-attendance.html',
-                controller:'AttendanceCtrl'
+            .state('teacher_attendance', {
+                url: '/teacher_attendance',
+                templateUrl: 'templates/teacher-attendance.html',
+                controller: 'AttendanceCtrl'
             })
             //考勤旷课详情
-            .state('teacher_attendance_details',{
+            .state('teacher_attendance_details', {
                 url: '/teacher_attendance/:AttId',
                 templateUrl: 'templates/teacher-attendance-details.html',
                 controller: 'AttendanceDetailsCtrl'
             })
 
-            .state('face',{
+            .state('face', {
                 url: '/face',
                 templateUrl: 'templates/face.html',
                 controller: 'FaceCtrl'
             })
-
-
 
 
         // if none of the above states are matched, use this as the fallback

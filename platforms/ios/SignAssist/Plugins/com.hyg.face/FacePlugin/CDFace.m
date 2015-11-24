@@ -43,13 +43,25 @@
             
         }else
         {
-            NSString* msg =[NSString stringWithFormat:@"{\"op\":\"search\",\"result\":\"fail\"}"];
+            NSError* error = (NSError*)xxx;
+            if(error.code == 1005)
+            {
+            NSString* msg =[NSString stringWithFormat:@"{\"op\":\"search\",\"result\":\"fail\",\"msg\":\"你还没有注册\"}"];
             CDVPluginResult* result = [CDVPluginResult
                                        resultWithStatus:CDVCommandStatus_OK
                                        messageAsString:msg];
             [result setKeepCallbackAsBool:true];
             
             [self success:result callbackId:_callbackId];
+            }else{
+                NSString* msg =[NSString stringWithFormat:@"{\"op\":\"search\",\"result\":\"fail\",\"msg\":\"发生网络错误\"}"];
+                CDVPluginResult* result = [CDVPluginResult
+                                           resultWithStatus:CDVCommandStatus_OK
+                                           messageAsString:msg];
+                [result setKeepCallbackAsBool:true];
+                
+                [self success:result callbackId:_callbackId];
+            }
         }
         //
     }];

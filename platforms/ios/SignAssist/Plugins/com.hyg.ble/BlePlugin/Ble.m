@@ -60,7 +60,7 @@
         result = @"{\"result\":\"success\"}";
         //
     }else{
-        result = @"{\"result\":\"fail\",\"msg\":\"不在预定的范围之内\"}";
+        result = @"{\"result\":\"fail\",\"msg\":\"你不在规定的地点签到,如果你确实在规定的地点，请到室外进行签到\"}";
     }
     
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];

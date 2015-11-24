@@ -11,7 +11,9 @@ module.exports = {
     supportBle: function (successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "Ble", "supportBle", []);
     },
-
+    getlevel: function (successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "Ble", "getlevel", []);
+    },
     exit: function (successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "Ble", "exit", []);
     }

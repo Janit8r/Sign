@@ -45,11 +45,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -99,7 +99,7 @@
                     ],
                     "/manifest/application": [
                         {
-                            "xml": "<activity android:label=\"@string/multi_app_name\" android:name=\"com.synconset.MultiImageChooserActivity\" android:theme=\"@android:style/Theme.Holo.Light\"><intent-filter /></activity>",
+                            "xml": "<activity android:label=\"@string/multi_app_name\" android:name=\"com.synconset.MultiImageChooserActivity\" android:theme=\"@android:style/Theme.Holo.Light\"></activity>",
                             "count": 1
                         }
                     ]
@@ -135,10 +135,10 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.mybofeng.sign"
         },
-        "cordova-plugin-network-information": {
+        "com.synconset.imagepicker": {
             "PACKAGE_NAME": "com.mybofeng.sign"
         },
-        "com.synconset.imagepicker": {
+        "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.mybofeng.sign"
         }
     },
@@ -382,6 +382,14 @@
             "runs": true
         },
         {
+            "file": "plugins/com.synconset.imagepicker/www/imagepicker.js",
+            "id": "com.synconset.imagepicker.ImagePicker",
+            "pluginId": "com.synconset.imagepicker",
+            "clobbers": [
+                "plugins.imagePicker"
+            ]
+        },
+        {
             "file": "plugins/cordova-plugin-network-information/www/network.js",
             "id": "cordova-plugin-network-information.network",
             "pluginId": "cordova-plugin-network-information",
@@ -396,14 +404,6 @@
             "pluginId": "cordova-plugin-network-information",
             "clobbers": [
                 "Connection"
-            ]
-        },
-        {
-            "file": "plugins/com.synconset.imagepicker/www/imagepicker.js",
-            "id": "com.synconset.imagepicker.ImagePicker",
-            "pluginId": "com.synconset.imagepicker",
-            "clobbers": [
-                "plugins.imagePicker"
             ]
         }
     ]

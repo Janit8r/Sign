@@ -8,13 +8,16 @@
       <div pickadate ng-model="myendDate"></div>
     </div>
     <div align="center">
-      <button style="color: white;background-color: #386def;" >
-        选择时间
-        <input type="time" name="user_date" ng-model="datetime" style="text-align: center">
-      </button>
+
+        <ionic-timepicker input-obj="endTimePickerObject">
+          <button class="button button-block button-positive overflowShow">
+            <standard-time-meridian etime='endtimePickerObject.inputEpochTime'>{{endTime}}</standard-time-meridian>
+          </button>
+        </ionic-timepicker>
+
     </div>
     <div class="padding">
-      <button class="button button-full button-positive" style="opacity: 0.8;" ng-click="closedateModal_end(myendDate,datetime)">确定选择时间</button>
+      <button class="button button-full button-positive" style="opacity: 0.8;" ng-click="closedateModal_end(myendDate,endSelectedTime)">确定选择时间</button>
     </div>
 
   </ion-content>

@@ -19,11 +19,7 @@
         <service android:enabled="true" android:name="com.baidu.location.f" android:process=":remote">
         </service>
         <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="7n8AiO6gTx6t50jiZIhQi61f" />
-        <activity android:label="@string/multi_app_name" android:name="com.synconset.MultiImageChooserActivity">
-            <intent-filter />
-        </activity>
         <activity android:label="@string/multi_app_name" android:name="com.synconset.MultiImageChooserActivity" android:theme="@android:style/Theme.Holo.Light">
-            <intent-filter />
         </activity>
     </application>
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22" />
@@ -34,11 +30,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>

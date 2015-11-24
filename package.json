@@ -35,7 +35,8 @@
       "locator": "/Users/linhehe/Desktop/BlueTouch/com.hyg.ble",
       "id": "com.hyg.ble"
     },
-    "com.synconset.imagepicker"
+    "com.synconset.imagepicker",
+    "cordova-plugin-network-information"
   ],
   "cordovaPlatforms": [
     "ios",

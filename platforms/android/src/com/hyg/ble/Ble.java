@@ -174,8 +174,8 @@ public class Ble extends CordovaPlugin {
 							_context.sendPluginResult(rrk);
 						}else
 						{
-							PluginResult rrk = new PluginResult(PluginResult.Status.OK,"{\"result\":\"fail\",\"msg\":\"你不在所规定的距离签到\"}");
-							rrk.setKeepCallback(false);
+							PluginResult rrk = new PluginResult(PluginResult.Status.OK,"{\"result\":\"fail\",\"msg\":\"你不在所规定的地点签到,如果你确实在规定的地点，请到室外进行签到\"}");
+							rrk.setKeepCallback(true);
 							_context.sendPluginResult(rrk);
 						}
 						
@@ -184,7 +184,7 @@ public class Ble extends CordovaPlugin {
 					case BDLocation.TypeNetWorkException:
 					case BDLocation.TypeCriteriaException:
 
-						PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"fail\",\"type\":\"gps\"}");
+						PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"result\":\"fail\",\"type\":\"gps\",\"msg\":\"获取位置不准许,请充许打开系统的位置许可\"}");
 						rr.setKeepCallback(true);
 						_context.sendPluginResult(rr);
 
@@ -216,16 +216,24 @@ public class Ble extends CordovaPlugin {
 			 _context = null;
 
 		}
+		
 		if (action.equals("exit")) {
 			System.exit(0);
+		}
+		if(action.equals("getlevel"))
+		{
+			 PluginResult rr = new PluginResult(PluginResult.Status.OK, "{\"level\":\""+android.os.Build.VERSION.SDK_INT+"\"}");
+				rr.setKeepCallback(true);
+				_context.sendPluginResult(rr);
+		
 		}
 		if (action.equals("scanBlue")) {
 			_name = data.getString(0);
 			this.ScanBlue();
-			return true;
-
-		} else {
-			return false;
-		}
+			
+		} 
+		
+		return true;
+		
 	}
 }

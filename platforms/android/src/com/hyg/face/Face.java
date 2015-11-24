@@ -83,7 +83,7 @@ public class Face extends CordovaPlugin {
 			public void onFailure(int statusCode, Header[] headers,
 					Throwable throwable, JSONObject errorResponse) {
 				super.onFailure(statusCode, headers, throwable, errorResponse);
-				Face.this.context.success("{op:'search',result:'fail'}");
+				Face.this.context.success("{\"op\":\"search\",\"result\":\"fail\"}");
 				// Log.w("ceshi", "onFailure+++===" + errorResponse.toString());
 				
 			}

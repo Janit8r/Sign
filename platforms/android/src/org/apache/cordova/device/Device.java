@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Build;
 import android.provider.Settings;
 
 public class Device extends CordovaPlugin {
@@ -70,6 +71,7 @@ public class Device extends CordovaPlugin {
         if (action.equals("getDeviceInfo")) {
             JSONObject r = new JSONObject();
             r.put("uuid", Device.uuid);
+            r.put("level",Build.VERSION.RELEASE);
             r.put("version", this.getOSVersion());
             r.put("platform", this.getPlatform());
             r.put("model", this.getModel());

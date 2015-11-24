@@ -135,12 +135,12 @@ public class PluginManager {
             }
             if (!wasValidAction) {
                 PluginResult cr = new PluginResult(PluginResult.Status.INVALID_ACTION);
-                cr.setKeepCallback(true);
+               
                 callbackContext.sendPluginResult(cr);
             }
         } catch (JSONException e) {
             PluginResult cr = new PluginResult(PluginResult.Status.JSON_EXCEPTION);
-            cr.setKeepCallback(true);
+           
             callbackContext.sendPluginResult(cr);
         } catch (Exception e) {
             Log.e(TAG, "Uncaught exception from plugin", e);

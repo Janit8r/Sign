@@ -9,14 +9,16 @@
     </div>
     <div>
       <div align="center">
-        <button style="color: white;background-color: #386def;" >
-          选择时间
-          <input type="time" name="user_date" ng-model="datetime" style="text-align: center">
-        </button>
+          <ionic-timepicker input-obj="beginTimePickerObject">
+            <button class="button button-block button-positive overflowShow">
+              <standard-time-meridian etime='beginTimePickerObject.inputEpochTime'>{{beginTime}}</standard-time-meridian>
+            </button>
+          </ionic-timepicker>
+
       </div>
     </div>
     <div class="padding">
-      <button class="button button-full button-positive" style="opacity: 0.8" ng-click="closedateModal(myDate,datetime)">确定选择时间</button>
+      <button class="button button-full button-positive" style="opacity: 0.8" ng-click="closedateModal(myDate,beginSelectedTime)">确定选择时间</button>
     </div>
 
   </ion-content>
