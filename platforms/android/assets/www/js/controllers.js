@@ -1663,54 +1663,57 @@ angular.module('starter.controllers', ['pickadate', 'ionic-timepicker'])
         $scope.back =function(){
             $state.go("index_tab.study");
         }
-        $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
-
-
-            $ionicLoading.show({
-                templateUrl: 'templates/loadingPage.html'
-            });
-
-            $http.get(httparr + '/getpoint', {
-                params: {
-                    date:  new Date(),
-                    StudentId: window.localStorage['_id'],
-                    tag: 'ClassRoom'
-                }
-            }).success(function(data) {
-                if(data=="没课"){
-                    $ionicLoading.hide();
-                    $ionicPopup.alert({
-                        title: '提示',
-                        template: "当前时间没课,不需要签到"
-                    });
-                    $scope.sign_button_state = 'button-stable';
-                    $scope.signout_button_state = 'button-stable';
-                    $scope.signbutton = '-1';
-                }
-                else {
-                    ble.scanBlue(data.tag, function (message) {
-
-                        var res = JSON.parse(message);
-                        if (res.result == "success") {
-                            $ionicLoading.hide();
-
-                            student_sign();
-
-                        } else {
-                            $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title: '提示',
-                                template: "当前位置不存在指定的蓝牙设备,无法进行签到"
-                            });
-                            $scope.sign_button_state = 'button-stable';
-                            $scope.signout_button_state = 'button-stable';
-                            $scope.signbutton = '-1';
-                        }
-                    });
-                }
-            });
-
-        })
+        //$scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
+        //
+        //
+        //    $ionicLoading.show({
+        //        templateUrl: 'templates/loadingPage.html'
+        //    });
+        //    var date=new Date();
+        //    $http.get(httparr + '/getpoint', {
+        //
+        //
+        //        params: {
+        //            date:  date,
+        //            StudentId: window.localStorage['_id'],
+        //            tag: 'ClassRoom'
+        //        }
+        //    }).success(function(data) {
+        //
+        //        if(data=="没课"){
+        //            $ionicLoading.hide();
+        //            $ionicPopup.alert({
+        //                title: '提示',
+        //                template: "当前时间没课,不需要签到"
+        //            });
+        //            $scope.sign_button_state = 'button-stable';
+        //            $scope.signout_button_state = 'button-stable';
+        //            $scope.signbutton = '-1';
+        //        }
+        //        else {
+        //            ble.scanBlue(data.tag, function (message) {
+        //
+        //                var res = JSON.parse(message);
+        //                if (res.result == "success") {
+        //                    $ionicLoading.hide();
+        //
+        //                    student_sign();
+        //
+        //                } else {
+        //                    $ionicLoading.hide();
+        //                    $ionicPopup.alert({
+        //                        title: '提示',
+        //                        template: "当前位置不存在指定的蓝牙设备,无法进行签到"
+        //                    });
+        //                    $scope.sign_button_state = 'button-stable';
+        //                    $scope.signout_button_state = 'button-stable';
+        //                    $scope.signbutton = '-1';
+        //                }
+        //            });
+        //        }
+        //    });
+        //
+        //})
         //点击签到按钮
         $scope.sign = function () {
 
