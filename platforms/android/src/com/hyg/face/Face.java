@@ -18,8 +18,10 @@ import com.loopj.android.http.RequestParams;
 import com.megvii.livenessdetection.DetectionFrame;
 import com.mybofeng.sign.R;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.view.View;
 
@@ -34,7 +36,6 @@ public class Face extends CordovaPlugin {
 	             String imagePath=intent.getStringExtra("imagePath");
 	             this.context.success("{\"op\":\"regiser\",\"result\":\"success\",\"imagePath\":\""+imagePath+"\"}");
 	         }
-	        
 	         else{
 	             this.context.success("{\"op\":\"regiser\",\"result\":\"fail\"}");
 	         }
@@ -43,7 +44,7 @@ public class Face extends CordovaPlugin {
 	    	 if(resultCode == android.app.Activity.RESULT_OK){
 	             //in case of success return the string to javascript
 	             String result=intent.getStringExtra("result"); 
-	           
+	             
 	             this.context.success("{\"op\":\"verify\",\"result\":\""+result+"\"}");
 	         }
 	         
@@ -92,6 +93,24 @@ public class Face extends CordovaPlugin {
 				jsonHttpResponseHandler);
 		
 	}
+	public class MyReceiver extends BroadcastReceiver {  
+	      
+	    private static final String TAG = "MyReceiver";  
+	      
+	    @Override  
+	    public void onReceive(Context context, Intent intent) {  
+	       
+	    	        //in case of success return the string to javascript
+		             String result=intent.getStringExtra("result"); 
+		             String imagePath=intent.getStringExtra("imagePath");
+		             if(imagePath != null)
+		            	Face.this.context.success("{\"result\":\"success\",\"imagePath\":\""+imagePath+"\"}");
+		             else
+		            	 Face.this.context.success("{\"result\":\""+result+"\"}");
+		             cordova.getActivity().unregisterReceiver(this);
+	    }  
+	  
+	}  
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
     	context = callbackContext;
@@ -109,7 +128,13 @@ public class Face extends CordovaPlugin {
     	
     		Intent intent = new Intent(cordova.getActivity(),FaceSignInActivity.class);
     		intent.putExtra("name", name);
-    		cordova.startActivityForResult(this, intent,1);
+    		cordova.getActivity().startActivity(intent);
+    		MyReceiver receiver = new MyReceiver();  
+            
+    		IntentFilter filter = new IntentFilter();  
+    		filter.addAction("android.intent.action.MY_BROADCAST");  
+    		          
+    		cordova.getActivity().registerReceiver(receiver, filter);  
     		//
     	}
     	
@@ -119,7 +144,13 @@ public class Face extends CordovaPlugin {
 		Intent intent = new Intent(context,MainActivity.class);
 		intent.putExtra("name",name);
 		intent.putExtra("faceid",name);
-		cordova.startActivityForResult(this, intent,2);
+		cordova.getActivity().startActivity(intent);
+		MyReceiver receiver = new MyReceiver();  
+        
+		IntentFilter filter = new IntentFilter();  
+		filter.addAction("android.intent.action.MY_BROADCAST");  
+		          
+		cordova.getActivity().registerReceiver(receiver, filter);  
     }
     return true;
     }

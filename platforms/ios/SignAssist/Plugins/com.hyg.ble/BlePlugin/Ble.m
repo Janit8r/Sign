@@ -28,7 +28,7 @@
     _callId =command.callbackId;
     manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     
-    _timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(action:) userInfo:nil repeats:NO];
+ 
     _opMode=2;
     
     
@@ -106,6 +106,7 @@
         case CBCentralManagerStatePoweredOff:
             {
                 [nsmstring appendString:@"PoweredOff\n"];
+                
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"{\"result\":\"false\"}"];
                 [pluginResult setKeepCallbackAsBool:YES];
                 [self.commandDelegate sendPluginResult:pluginResult callbackId:_callId];
@@ -123,6 +124,7 @@
             if(_opMode==2)
             {
                 [manager scanForPeripheralsWithServices:nil options:options];
+                _timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(action:) userInfo:nil repeats:NO];
                
             }else if(_opMode ==1){
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"{\"result\":\"ble\"}"];

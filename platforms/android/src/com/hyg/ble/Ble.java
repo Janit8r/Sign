@@ -65,8 +65,6 @@ public class Ble extends CordovaPlugin {
 		mLocationClient.setLocOption(option);
 	}
 
-	
-
 	static double DEF_PI = 3.14159265359; 
 		static double DEF_2PI= 6.28318530712; 
 		static double DEF_PI180= 0.01745329252;
@@ -143,6 +141,7 @@ public class Ble extends CordovaPlugin {
 				_context.sendPluginResult(rr);
 			}
     }
+	//
 	@Override
 	public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
 		_context = callbackContext;

@@ -21,6 +21,8 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -99,7 +101,12 @@ public class FaceSignInActivity extends Activity implements OnClickListener,
 					e.printStackTrace();
 				}
 			} else {
-				ConUtil.showToast(FaceSignInActivity.this, "请拍摄头像再识别");
+				AlertDialog.Builder builder = new Builder(FaceSignInActivity.this);
+				builder.setMessage("请拍摄头像再识别");
+				builder.setTitle("错误");
+				builder.setPositiveButton("OK", null);
+				builder.create().show();
+			
 			}
 			break;
 		
@@ -142,19 +149,32 @@ public class FaceSignInActivity extends Activity implements OnClickListener,
 //						intent.putExtra("faceid", resPersonName);
 //						intent.putExtra("name", resPersonName);
 //						startActivity(intent);
-						   Intent returnIntent = new Intent();
-						    returnIntent.putExtra("result", "succeed");
-						    returnIntent.putExtra("imagePath", mImagePath);
+						 
+						  Intent intent = new Intent("android.intent.action.MY_BROADCAST");
+						  intent.putExtra("result", "success");
+						  intent.putExtra("imagePath", mImagePath);
+						   
+						    sendBroadcast(intent);  
+							finish();
 						    
-						    setResult(android.app.Activity.RESULT_OK, returnIntent);
-						finish();
 					} else {
-						ConUtil.showToast(FaceSignInActivity.this,
-								response.getString("error"));
+						 Intent intent = new Intent("android.intent.action.MY_BROADCAST");
+						  intent.putExtra("result", response.getString("error"));
+						   
+						    sendBroadcast(intent);  
+							finish();
+					
+						
 						
 					}
 				} catch (Exception e) {
-					ConUtil.showToast(FaceSignInActivity.this, "照片不合格，请重新拍摄！");
+					 Intent intent = new Intent("android.intent.action.MY_BROADCAST");
+					  intent.putExtra("result","照片不合格，请重新拍摄");
+					  
+					  sendBroadcast(intent);  
+					finish();
+					
+					
 					
 				}
 			}
@@ -163,8 +183,13 @@ public class FaceSignInActivity extends Activity implements OnClickListener,
 			public void onFailure(int statusCode, Header[] headers,
 					byte[] responseBody, Throwable error) {
 				mBar.setVisibility(View.GONE);
-				ConUtil.showToast(FaceSignInActivity.this,
-						"网络错误，请检查网络重新拍照上传照片！");
+				 Intent intent = new Intent("android.intent.action.MY_BROADCAST");
+				  intent.putExtra("result","无法识别人脸,请确保在明亮的环境下进行注册");
+				   
+				  sendBroadcast(intent);  
+				finish();
+
+				
 			}
 		});
 	}

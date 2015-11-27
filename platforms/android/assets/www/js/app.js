@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
+angular.module('starter', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers', 'ngCordova'])
 
     .run(function ($ionicPlatform,$ionicHistory, $ionicPopup, $state) {
 
@@ -281,6 +281,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
             //请假-我的请假页面
             .state('leave_tab.myleave', {
                 url: '/myleave',
+
                 views: {
                     'leave_tab-myleave': {
                         templateUrl: 'templates/Leave-myleave.html',
@@ -289,14 +290,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
                 }
             })
             //学生签到
-            .state('index_tab.student_getpoint', {
+            .state('student_getpoint', {
                 url: '/student_getpoint',
-                views: {
-                    'index_tab-study': {
-                        templateUrl: 'templates/student_getpoint.html',
-                        controller: 'student_getpointCtrl'
-                    }
-                }
+
+                templateUrl: 'templates/student_getpoint.html',
+                controller: 'student_getpointCtrl'
+
             })
             //班委签到tabs
             .state('Getpoint_tabs', {
@@ -306,17 +305,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
                 templateUrl: 'templates/Getpoint-tabs.html'
             })
             //签到-班委个人签到页面
-            .state('Getpoint_tabs.getpointstudent', {
-                url: '/getpointstudent',
-                cache: false,
-                views: {
-                    'Getpoint_tabs-getpointstudent': {
-                        cache: false,
-                        templateUrl: 'templates/student_getpoint.html',
-                        controller: 'student_getpointCtrl'
-                    }
-                }
-            })
+            //.state('Getpoint_tabs.getpointstudent', {
+            //    url: '/getpointstudent',
+            //    cache: false,
+            //    views: {
+            //        'Getpoint_tabs-getpointstudent': {
+            //            cache: false,
+            //            templateUrl: 'templates/student_getpoint.html',
+            //            controller: 'student_getpointCtrl'
+            //        }
+            //    }
+            //})
             //签到-班级成员签到页面
             .state('Getpoint_tabs.members', {
                 url: '/members',

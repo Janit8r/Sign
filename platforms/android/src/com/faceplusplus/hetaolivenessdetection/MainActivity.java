@@ -448,28 +448,9 @@ public class MainActivity extends Activity implements PreviewCallback,
 	 */
 	private void handleResult(final int resID) {
 		String resultString = getResources().getString(resID);
-//		try {
-//			jsonObject.put("result", resultString);
-//			jsonObject.put("resultcode", resID);
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-		
-			
-		Intent intent = new Intent();
-		
-	    intent.putExtra("result",resultString);
-		setResult(RESULT_OK, intent);
-		SharedPreferences preferences = getSharedPreferences("verify", MODE_PRIVATE);   
-		 Editor editor = preferences.edit();   
-		
-		 editor.putString("result",resultString);   
-		 editor.commit(); 
-		Log.d("fininsh","finished");
-//		if (name != null) {
-//			ResultActivity.startActivity(MainActivity.this,
-//					jsonObject.toString());
-//		}
+		Intent intent = new Intent("android.intent.action.MY_BROADCAST");  
+		intent.putExtra("result",resultString);	 
+	    sendBroadcast(intent);  
 		finish();
 	}
 

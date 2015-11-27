@@ -180,7 +180,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                       if (finsh) {
                           NSDictionary *weatherDic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableLeaves error:&error];
                           
-                          finsh(error);
+                          NSError* err = [NSError errorWithDomain:@"" code:error.code userInfo:weatherDic];
+                          finsh(err);
                       }
                   }];
 }
@@ -198,7 +199,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                       if (finsh) {
                          
-                              NSDictionary *weatherDic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:NSJSONReadingMutableLeaves error:&error];
                           finsh(error);
                       }
                   }];

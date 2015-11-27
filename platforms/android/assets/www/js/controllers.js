@@ -1,6 +1,6 @@
 //window.localStorage['httparr'] = 'http://huyugui.ddns.net:4343';
-var httparr = 'http://huyugui.eicp.net:4343';
-//var httparr = 'http://172.16.20.110:4343';
+//var httparr = 'http://huyugui.eicp.net:4343';
+var httparr = 'http://113.31.89.205:4343';
 var time;
 var get_wifitime;
 var check_stuwifitime;
@@ -820,7 +820,7 @@ angular.module('starter.controllers', ['pickadate', 'ionic-timepicker'])
         $scope.sign = function () {
             //跳转至签到
 
-            $state.go('index_tab.student_getpoint')
+            $state.go('student_getpoint')
         }
         $scope.myteachers = function () {
             //跳转至我的老师
@@ -1270,6 +1270,12 @@ angular.module('starter.controllers', ['pickadate', 'ionic-timepicker'])
                                     }, function (progress) {
                                     });
                             });
+                        }else
+                        {
+                            $ionicPopup.alert({
+                                title: '错误',
+                                template:JSON.parse(error).result
+                            })
                         }
                         $scope.currentValue = msg;
                         $scope.$apply();
@@ -1646,7 +1652,20 @@ angular.module('starter.controllers', ['pickadate', 'ionic-timepicker'])
                     }
                 });
         }
+        //$scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+        //    if (toState.name == "index_tab.student_getpoint")
+        //    {
+        //        alert(JSON.stringify(state));
+        //    }
+        //
+        //});
+
+        $scope.back =function(){
+            $state.go("index_tab.study");
+        }
         $scope.$on('$ionicView.afterEnter', function (viewInfo, state) {
+
+
             $ionicLoading.show({
                 templateUrl: 'templates/loadingPage.html'
             });
@@ -1658,26 +1677,37 @@ angular.module('starter.controllers', ['pickadate', 'ionic-timepicker'])
                     tag: 'ClassRoom'
                 }
             }).success(function(data) {
+                if(data=="没课"){
+                    $ionicLoading.hide();
+                    $ionicPopup.alert({
+                        title: '提示',
+                        template: "当前时间没课,不需要签到"
+                    });
+                    $scope.sign_button_state = 'button-stable';
+                    $scope.signout_button_state = 'button-stable';
+                    $scope.signbutton = '-1';
+                }
+                else {
+                    ble.scanBlue(data.tag, function (message) {
 
-                ble.scanBlue(data.tag, function (message) {
+                        var res = JSON.parse(message);
+                        if (res.result == "success") {
+                            $ionicLoading.hide();
 
-                    var res = JSON.parse(message);
-                    if (res.result == "success") {
-                        $ionicLoading.hide();
+                            student_sign();
 
-                        student_sign();
-
-                    } else {
-                        $ionicLoading.hide();
-                        $ionicPopup.alert({
-                            title: '提示',
-                            template: "请打开蓝牙重新打开签到"
-                        });
-                        $scope.sign_button_state = 'button-stable';
-                        $scope.signout_button_state = 'button-stable';
-                        $scope.signbutton = '-1';
-                    }
-                });
+                        } else {
+                            $ionicLoading.hide();
+                            $ionicPopup.alert({
+                                title: '提示',
+                                template: "当前位置不存在指定的蓝牙设备,无法进行签到"
+                            });
+                            $scope.sign_button_state = 'button-stable';
+                            $scope.signout_button_state = 'button-stable';
+                            $scope.signbutton = '-1';
+                        }
+                    });
+                }
             });
 
         })

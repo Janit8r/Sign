@@ -117,7 +117,7 @@
             //
         }else{
             NSError* error = (NSError*)xxx;
-            NSString* desc = error.localizedDescription;
+            NSString* desc = [error.userInfo objectForKey:@"error"];
             NSDictionary *d = [NSDictionary dictionaryWithObject:desc
                                                           forKey:@"result"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"register" object:self userInfo:d];
