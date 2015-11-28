@@ -335,6 +335,11 @@ angular.module('starter', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers'
                 templateUrl: 'templates/MySchedule.html',
                 controller: 'MyScheduleCtrl'
             })
+            .state('CheckStudent',{
+                url:"/CheckStudent",
+                templateUrl:"templates/checkStudent.html",
+                controller:'checkStudentCtrl'
+            })
             //      我的班级成员信息
             .state('myclass_students', {
                 url: '/myclass_students',

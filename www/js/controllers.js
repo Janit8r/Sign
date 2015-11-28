@@ -822,6 +822,9 @@ angular.module('starter.controllers', ['pickadate', 'ionic-timepicker'])
 
             $state.go('student_getpoint')
         }
+        $scope.checkStudent=function(){
+            $state.go('CheckStudent');
+        }
         $scope.myteachers = function () {
             //跳转至我的老师
 
@@ -1576,7 +1579,18 @@ angular.module('starter.controllers', ['pickadate', 'ionic-timepicker'])
         })
 
     })
-
+    .controller('checkStudentCtrl',function($scope,$ionicLoading,$state,$http){
+        $scope.back =function(){
+            $state.go("index_tab.study");
+        }
+        $ionicLoading.show();
+        $http.get(httparr+'/SignInState', {params: { ClassId: window.localStorage['Classes'] }})
+            .success(function(data){
+                $scope.infors = data;
+                console.log(data);
+                $ionicLoading.hide();
+            });
+    })
     //学生端、定位签到页面控制器
     .controller('student_getpointCtrl', function ($scope, $state, $ionicPopup, $http, $ionicLoading, $timeout, $cordovaDevice, $ionicModal) {
         //$scope.height = window.innerHeight

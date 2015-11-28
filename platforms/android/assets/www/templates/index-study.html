@@ -2,8 +2,14 @@
     <ion-content overflow-scroll="true" style="overflow: hidden">
         <table style="width: 100%;" ng-style="{height: screenheight + 'px'}">
             <tr>
-                <td style="width:33%;height:{{jiugongeheight}}px;background-color: #339999;">
-                    <!-- 第一个九宫格-->
+                <td valign="cener" style="width:33.1%;height:{{jiugongeheight}}px;background-color: #339999;text-align: center" ng-click="checkStudent()">
+                    <!-- 第四个九宫格-->
+                    <!-- 内容-->
+                    <div style="color: white;margin-top: 5vh">
+                        <i class="ion-ios-checkmark" style="font-size: 70px;"></i>
+                        <br/>
+                        <span>我的审核</span>
+                    </div>
                 </td>
                 <td valign="cener" style="width:33.1%;height:{{jiugongeheight}}px;background-color: #339999;text-align: center" ng-click="leave()">
                     <!-- 第二个九宫格-->
